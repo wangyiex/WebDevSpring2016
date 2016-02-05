@@ -10,7 +10,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Home Page</title>
+    <title>Forms Fields</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -18,7 +18,7 @@
 
     <!-- Custom styles for this template -->
     <link href="css/dashboard.css" rel="stylesheet">
-
+    <link href="css/style.css" rel="stylesheet">
 
 </head>
 
@@ -33,12 +33,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Form Maker</a>
+            <a class="navbar-brand" href="home.html">Form Maker</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="register.html">Register</a></li>
-                <li><a href="login.html">Login</a></li>
                 <li><a href="#">Username</a></li>
                 <li><a href="#">Logout</a></li>
             </ul>
@@ -56,14 +54,14 @@
                 <li class="active"><a href="forms.html">Forms</a></li>
             </ul>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ">
+        <div class="col-sm-9 col-sm-offset-2 col-md-10 col-md-offset-2 main ">
             <h1>Forms : Registration Form</h1>
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs col-md-8">
                 <li role="presentation"><a href="forms.html">Forms</a></li>
                 <li role="presentation"  class="active"><a href="#">Fields</a></li>
             </ul>
-            <div class="table-responsive ">
-                <table class="table ">
+            <div class="table-responsive border col-xs-8">
+                <table class="table table-borderless">
                     <thead>
                         <tr>
                             <th></th>
@@ -80,7 +78,7 @@
                             </td>
                             <td>
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8">
                                 <a class="btn btn-primary pull-right">
                                     <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
                                 </a>
@@ -105,7 +103,7 @@
                             </td>
                             <td>
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8">
                                     <a class="btn btn-primary pull-right">
                                         <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
                                     </a>
@@ -126,16 +124,13 @@
                                 <div class="form-group col-xs-10">
                                     <label for="fields_dateofbirth">Date Of Birth:</label>
                                     <div class="dropdown">
-                                        <button class="btn btn-default dropdown-toggle " type="button" id="fields_dateofbirth" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Select Date
-                                            <span class="caret"></span>
-                                        </button>
+                                        <input type="date" id="fields_dateofbirth"/>
                                     </div>
                                 </div>
                             </td>
                             <td>
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8">
                                     <a class="btn btn-primary pull-right">
                                         <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
                                     </a>
@@ -168,7 +163,7 @@
                             </td>
                             <td>
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8 ">
                                     <a class="btn btn-primary pull-right">
                                         <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
                                     </a>
@@ -210,7 +205,7 @@
                             </td>
                             <td>
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8">
                                     <a class="btn btn-primary pull-right">
                                         <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
                                     </a>
@@ -246,7 +241,7 @@
                             </td>
                             <td>
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-8">
                                     <a class="btn btn-primary pull-right">
                                         <span class="glyphicon glyphicon-align-justify" aria-hidden="true"></span>
                                     </a>
@@ -262,9 +257,9 @@
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <div class="form-group col-xs-6">
+                        <tr id="line">
+                            <td >
+                                <div class="form-group col-md-12 " >
                                     <label for="fields_addnew">Add New Field:</label>
                                     <div class="dropdown">
                                         <button class="btn btn-default dropdown-toggle" type="button" id="fields_addnew" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -281,14 +276,19 @@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td id="line2 col-xs-10">
                                 </br>
-                                <div class="form-group col-xs-6">
+                                <div class="form-group col-xs-5"id="line2" >
                                     <a class="btn btn-primary pull-right">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                                     </a>
 
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="empty"></div>
                             </td>
                         </tr>
                     </tbody>
