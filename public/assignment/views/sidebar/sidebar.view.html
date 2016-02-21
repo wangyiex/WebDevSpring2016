@@ -1,9 +1,9 @@
-<div class="col-sm-3 col-md-2 sidebar">
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController">
     <ul class="nav nav-sidebar">
-        <li class="active"><a href="home.view.html">Home <span class="sr-only">(current)</span></a></li>
-        <li><a href="../users/profile.view.html">Profile</a></li>
-        <li><a href="../admin/admin.view.html">Admin</a></li>
-        <li><a href="../forms/forms.view.html">Forms</a></li>
+        <li ng-class="{'active': selectedTab == 'home'}"><a ng-click="selectedTab = 'home'" href="#/home">Home <span class="sr-only">(current)</span></a></li>
+        <li ng-class="{'active': selectedTab == 'profile'}"><a ng-click="selectedTab = 'profile'" href="#/profile">Profile</a></li>
+        <li ng-class="{'active': selectedTab == 'admin'}"><a ng-click="selectedTab = 'admin'" href="#/admin">Admin</a></li>
+        <li ng-class="{'active': selectedTab == 'forms'}"><a ng-click="selectedTab = 'forms'" href="#/forms">Forms</a></li>
     </ul>
 </div>
 
