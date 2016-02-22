@@ -10,9 +10,9 @@
         $scope.register= register;
 
         function register(uregister) {
-           UserService.createUser(uregister,function(user){
-               $rootScope.currentuser = user;
-               console.log(user);
+           UserService.createUser(uregister,function(newuser){
+               $rootScope.currentuser = newuser;
+               console.log(newuser);
                $location.url('/profile');
            });
         }

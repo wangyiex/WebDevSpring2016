@@ -5,17 +5,18 @@
     angular
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
+
     function ProfileController($scope,UserService,$rootScope) {
         $scope.update = update;
         $scope.profile = {
-            name:$rootScope.currentuser.name,
-            password:$rootScope.currentuser.password,
-            email:$rootScope.currentuser.email
+            username: $rootScope.currentuser.username,
+            password:$rootScope.currentuser.password
         }
+
         function update(profile) {
-            UserService.updateUser($rootScope.currentuser._id,$rootScope.currentuser,function(updateuser){
-                $rootScope.currentuser = updateuser;
-            })
+           UserService.updateUser($rootScope.currentuser._id,profile,function(updateuser) {
+              $rootScope.currentuser = updateuser;
+           });
         }
 
     }
