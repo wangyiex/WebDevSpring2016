@@ -6,15 +6,13 @@
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
 
-    function ProfileController($scope,UserService,$rootScope) {
-        $scope.update = update;
-        $scope.profile = {
-            username: $rootScope.currentuser.username,
-            password:$rootScope.currentuser.password
+    function ProfileController($scope,UserService,$rootScope,$location) {
+        if (!$rootScope.currentuser) {
+            $location.url("/home");
         }
-
-        function update(profile) {
-           UserService.updateUser($rootScope.currentuser._id,profile,function(updateuser) {
+        $scope.update = update;
+        function update(user) {
+           UserService.updateUser($rootScope.currentuser._id,user,function(user) {
               $rootScope.currentuser = updateuser;
            });
         }

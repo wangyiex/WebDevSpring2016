@@ -27,22 +27,21 @@
         };
         return service;
 
-        function findUserByCredentials(username, password, callback) {
+        function findUserByCredentials(username, password) {
             var loginuser;
             for(u in users) {
                 if(users[u].username==username && users[u].password == password) {
                     loginuser = users[u];
                 }
             }
-            callback(loginuser);
+            return loginuser;
 
         }
 
-        function createUser(user,callback) {
-            var newuser= {"_id":(new Date).getTime(),"username":user.name,"password":user.password};
+        function createUser(user) {
+            var newuser= {"_id":(new Date).getTime(),"username":user.username,"password":user.password, "roles":["student"] };
             users.push(newuser);
-            console.log(users);
-            callback(newuser);
+            return newuser;
 
         }
         function deleteUserById(userId, callback) {
