@@ -32,7 +32,7 @@
                     templateUrl: "views/admin/admin.view.html",
                 })
                 .otherwise({
-                    redirectTo: "views/home/home.view.html"
+                    redirectTo: "/home"
                 });
         });
 })();

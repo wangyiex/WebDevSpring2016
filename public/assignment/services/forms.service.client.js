@@ -41,9 +41,8 @@
             callback(userforms);
 
         }
-        function deleteFormById(formId, callback){
+        function deleteFormById(formId){
             forms.splice(formId,1);
-            callback;
 
         }
         function updateFormById(formId, newForm, callback){

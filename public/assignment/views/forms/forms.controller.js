@@ -6,11 +6,8 @@
         .module("FormBuilderApp")
         .controller("FormController",FormController);
 
-    function FormController($scope,FormService,$rootScope,$location) {
+    function FormController($scope,FormService,$rootScope) {
 
-        if (!$rootScope.currentuser) {
-            $location.url("/home");
-        }
         //event handler
         $scope.addForm = addForm;
         $scope.updateForm = updateForm;
@@ -23,10 +20,11 @@
         });
 
         function addForm(formname) {
-            console.log(formname);
-            FormService.createFormForUser($rootScope.currentuser._id, formname,function(newform){
-                $scope.forms.push(newform);
-            });
+            if(formname) {
+                FormService.createFormForUser($rootScope.currentuser._id, formname, function (newform) {
+                    $scope.forms.push(newform);
+                });
+            }
         }
 
         function updateForm(formname) {
@@ -34,8 +32,8 @@
 
         }
         function deleteForm(index) {
-            FormService.deleteFormById(index,function(){
-            });
+            console.log("haha"+index);
+            FormService.deleteFormById(index);
             $scope.forms.splice(index,1);
         }
         function selectForm(index) {
