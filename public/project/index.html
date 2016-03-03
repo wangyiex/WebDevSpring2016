@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="JobMarketApp">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +18,8 @@
     <!-- Custom styles for this template -->
     <link href="css/carousel.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <script src="app.js"></script>
+    <script src="views/search/search.controler.js"></script>
 </head>
 <!-- NAVBAR
 ================================================== -->
@@ -38,7 +40,7 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#about">Register</a></li>
+                        <li><a href="haha/index.html">Register</a></li>
                         <li><a href="#contact">Login</a></li>
                     </ul>
                 </div>
@@ -56,7 +58,6 @@
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
         <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
     <!--the first slide section-->
     <div class="carousel-inner" role="listbox" >
@@ -78,26 +79,6 @@
                     <p><b>If you're <code>Employer</code> and looking for <code>ideal candidates</code>,  <code>Job Market</code>
                         is a perfect place for you to find your employee, this wonderful site offer a platform to let all the smart employees get to know your company</b></p>
                     <p><a class="btn btn-lg btn-primary" href="#" role="button">Post a position</a></p>
-                </div>
-            </div>
-        </div>
-        <!--the third slide section-->
-        <div class="item" style="background-image: url(img/3.jpg);background-size: cover">
-            <div class="container" style="border: dashed 1px red;">
-                <div class="row search">
-                    <div class="col-md-6">
-                        <h2>Search for company</h2>
-                        <div id="custom-search-input">
-                            <div class="input-group col-md-12">
-                                <input type="text" class="form-control input-lg" placeholder="Please type in company" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button">
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -128,7 +109,7 @@
             <p><a class="btn btn-default" href="#aa" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4">
-            <img class="img-circle" src="img/2.jpg" alt="Generic placeholder image" width="140" height="140">
+            <img class="img-circle" src="haha/images/2.jpg" alt="Generic placeholder image" width="140" height="140">
             <h2>For Employers</h2>
             <p><b>Wanna find your ideal applicants?Get your account,post a position and search for your ideal canditates!</b></p>
             <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
@@ -137,38 +118,17 @@
             <img class="img-circle" src="img/3.jpg" alt="Generic placeholder image" width="140" height="140">
             <h2>Search employers</h2>
             <p><b>Wanna get to know the information of the employers? Use search engine to find the details and reviews of the employer</b></p>
-            <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+            <p><a class="btn btn-default" href="views/search/search.view.html" role="button">View details &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
     </div><!-- /.row -->
 
 
     <!-- START THE FEATURETTES -->
 
-    <hr class="featurette-divider" >
+    <hr class="featurette-divider" id="aa" >
 
-    <div class="row featurette" style="background-color: #2e2e2e" id="aa">
-        <div class="col-md-7" >
-            <h2 class="featurette-heading">First featurette heading. <span class="text-muted">It'll blow your mind.</span></h2>
-            <p class="lead"></p>
-        </div>
-        <div class="col-md-5">
-            <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-    </div>
 
-    <hr class="featurette-divider">
 
-    <div class="row featurette" style="background-color: #2e2e2e">
-        <div class="col-md-7 col-md-push-5">
-            <h2 class="featurette-heading">Oh yeah, it's that good. <span class="text-muted">See for yourself.</span></h2>
-            <p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.</p>
-        </div>
-        <div class="col-md-5 col-md-pull-7">
-            <img class="featurette-image img-responsive center-block" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
-        </div>
-    </div>
-
-    <hr class="featurette-divider">
 
 
     <!-- FOOTER -->
