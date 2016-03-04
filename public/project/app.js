@@ -1,4 +1,4 @@
 (function(){
     angular
-        .module("JobMarketApp",[]);
+        .module("JobMarketApp", ["ngRoute"]);
 })();

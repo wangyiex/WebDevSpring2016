@@ -4,9 +4,6 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
-body {
-    padding-top: 70px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
-}
 
 .slide-image {
     width: 100%;
@@ -51,9 +48,4 @@ body {
 
 footer {
     margin: 50px 0;
-}
-.search-section {
-    width:80%;
-    text-align:center;
-    margin:0 auto;
 }
