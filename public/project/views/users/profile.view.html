@@ -1,0 +1,42 @@
+<div class="container" style="padding-top:70px;">
+
+    <div class="row" >
+
+        <div class="col-md-3">
+            <p class="lead"></p>
+            <div class="list-group">
+                <a href="#" class="list-group-item">Category 1</a>
+                <a href="#" class="list-group-item">Category 2</a>
+                <a href="#" class="list-group-item">Category 3</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Username:</label>
+                    <div class="col-sm-10">
+                       {{$root.currentuser.username}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">Password:</label>
+                    <div class="col-sm-10">
+                       {{$root.currentuser.password}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label  class="col-sm-2 control-label">Email:</label>
+                    <div class="col-sm-10">
+                        {{$root.currentuser.email}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    follows:
+                    <div ng-repeat="u in currentuser.likes">
+                        {{u}}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

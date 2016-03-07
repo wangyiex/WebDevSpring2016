@@ -10,6 +10,7 @@
         function logout() {
             $rootScope.currentuser = null;
             $location.url("/home");
+            console.log($rootScope.currentuser);
 
         }
     }
