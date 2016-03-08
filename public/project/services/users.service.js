@@ -6,7 +6,9 @@
     function UserService() {
         var users = [
             {	"_id":123, "username":"alice","password":"alice","email": "wang.yid@husky.neu.edu",
-            "likes":["yidong","pengfei","shifeng","shifu","tianyu","yonghao"],"roles":["student"]}
+            "likes":["bob"],"roles":["student"]},
+            {	"_id":234, "username":"bob","password":"bob","email": "bob@gmail.com",
+                "likes":["alice"],"roles":["admin"]}
         ];
 
 
@@ -16,6 +18,7 @@
             createUser:createUser,
             deleteUserById:deleteUserById,
             updateUser:updateUser,
+            showprofileByUsername:showprofileByUsername,
         };
         return service;
 
@@ -28,6 +31,15 @@
             }
             return loginuser;
 
+        }
+        function showprofileByUsername(username) {
+            var loginuser;
+            for(u in users) {
+                if(users[u].username==username) {
+                    loginuser = users[u];
+                }
+            }
+            return loginuser;
         }
 
         function createUser(user) {

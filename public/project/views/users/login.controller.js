@@ -1,12 +1,10 @@
 (function(){
     angular
         .module("JobMarketApp")
-        .controller("RegisterController", RegisterController);
+        .controller("LoginController", LoginController);
 
-    function RegisterController($scope, $rootScope,$location,UserService) {
-        $scope.register= register;
+    function LoginController($scope, $rootScope,$location,UserService) {
         $scope.login = login;
-
         function login(login) {
             var user = UserService.findUserByCredentials(login.email, login.password);
             if(user){
@@ -18,13 +16,6 @@
                 $location.url('/profile');
 
             }
-        }
-        function register(uregister) {
-            console.log("hahah")
-            var newUser = UserService.createUser(uregister);
-            $rootScope.currentuser = newUser;
-            $location.url("/profile");
-            console.log(newUser);
         }
     }
 })();

@@ -14,6 +14,10 @@
                     templateUrl: "views/users/login.view.html",
                     controller:"LoginController"
                 })
+                .when("/other/:username",{
+                    templateUrl:"views/users/other.view.html",
+                    controller:"OtherController"
+                })
                 .when("/profile", {
                     templateUrl: "views/users/profile.view.html",
                     controller :"ProfileController"
