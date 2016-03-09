@@ -3,7 +3,7 @@
         .module("JobMarketApp")
         .controller("ProfileController",ProfileController);
 
-    function ProfileController($scope,UserService,$rootScope,$location,$routeParams) {
+    function ProfileController($scope,UserService,$rootScope,$routeParams) {
         $scope.update = update;
         var name = $routeParams.name;
         function update(user) {
