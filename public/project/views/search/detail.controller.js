@@ -18,8 +18,8 @@
         $scope.reviews = reviews;
 
         function leftreview(user_review) {
-            console.log("diandefeiqi");
             GlassDoorService.leftreview(name,user_review,currentuser.username);
+
         }
 
     }

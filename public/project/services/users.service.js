@@ -6,9 +6,11 @@
     function UserService() {
         var users = [
             {	"_id":123, "username":"alice","password":"alice","email": "wang.yid@husky.neu.edu",
-            "likes":["bob"],"roles":["student"]},
+            "likes":["bob","yidong"],"roles":["student"]},
             {	"_id":234, "username":"bob","password":"bob","email": "bob@gmail.com",
-                "likes":["alice"],"roles":["admin"]}
+                "likes":["alice","yidong"],"roles":["admin"]},
+            {	"_id":456, "username":"yidong","password":"yidong","email": "yidong@gmail.com",
+                "likes":[],"roles":["admin"]}
         ];
 
 
@@ -19,6 +21,7 @@
             deleteUserById:deleteUserById,
             updateUser:updateUser,
             showprofileByUsername:showprofileByUsername,
+            followByName:followByName,
         };
         return service;
 
@@ -73,5 +76,28 @@
         function findAllUsers(callback) {
             return users;
         }
+
+        function followByName(username, currentuser) {
+            var exist;
+            for(u in users) {
+                if(users[u].username==currentuser.username) {
+                    for (user in currentuser.likes) {
+                        if(username == currentuser.likes[user]) {
+                            exist = username;
+                            }
+                        }
+                    if(exist){
+
+                    }else {
+                        if(users[u].likes) {
+                            users[u].likes.push(username);
+                        }else {
+                            users[u].likes = [];
+                            users[u].likes.push(username);
+                        }
+                    }
+                    }
+                }
+            }
     }
 })();
