@@ -3,7 +3,7 @@
         .module("JobMarketApp")
         .controller("DetailController",DetailController);
 
-    function DetailController($scope,$rootScope,$routeParams,GlassDoorService) {
+    function DetailController($scope,$rootScope,$routeParams,GlassDoorService,$location) {
        var name = $routeParams.name;
        var currentuser = $rootScope.currentuser;
        $scope.leftreview = leftreview;
@@ -18,7 +18,11 @@
         $scope.reviews = reviews;
 
         function leftreview(user_review) {
-            GlassDoorService.leftreview(name,user_review,currentuser.username);
+            if($rootScope.currentuser) {
+                GlassDoorService.leftreview(name, user_review, currentuser.username);
+            }else {
+                $location.url("/login");
+            }
 
         }
 
