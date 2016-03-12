@@ -20,11 +20,8 @@ module.exports = function (app) {
 
     }
 
-    function findUserByCredentials(credentials) {
+    function findFormByTitle(title) {
 
     }
 
-    function findUserByUsername(username) {
-
-    }
 };
