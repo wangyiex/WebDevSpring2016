@@ -8,7 +8,6 @@
 
     function RegisterController($scope, $rootScope,$location,UserService) {
         $scope.register= register;
-        $scope.message = null;
 
         function register(uregister) {
             $scope.message = null;
@@ -28,9 +27,13 @@
                 $scope.message = "Passwords must match";
                 return;
             }
-            var newUser = UserService.createUser(uregister);
-            $rootScope.currentuser = newUser;
-            $location.url("/profile");
+            UserService
+                .createUser(uregister)
+                .then(function(response){
+                    $rootScope.currentuser = response.data;
+                    $location.url("/profile");
+                });
+
         }
     }
 })();

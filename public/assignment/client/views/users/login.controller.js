@@ -9,18 +9,19 @@
     function LoginController($scope,UserService,$rootScope,$location) {
         $scope.login = login;
         function login(login) {
-            var user = UserService.findUserByCredentials(login.username, login.password);
-               if(user){
-                   $rootScope.currentuser = user;
-                   if(user.roles && user.roles.indexOf('admin') >= 0) {
-                       $location.url('/admin');
-                   }
+             UserService.findUserByCredentials(login.username, login.password)
+                 .then(function (response){
+                     var user = response.data;
+                     if(user){
+                         $rootScope.currentuser = user;
+                         if(user.roles && user.roles.indexOf('admin') >= 0) {
+                             $location.url('/admin');
+                         }
 
-                   $location.url('/profile');
+                         $location.url('/profile');
 
-               }
+                     }
+                 })
             }
         }
-
-
 })();

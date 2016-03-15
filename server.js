@@ -1,12 +1,19 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
-app.use(express.static(__dirname + '/public'));
+
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-app.get('/hello', function(req, res){
-    res.send('hello world');
-});
+
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+
+
+require("./public/assignment/server/app.js")(app);
+
+
 app.listen(port, ipaddress);
-require("./public/assignment/server/models/user.model.js") (app);
-require("./public/assignment/server/models/form.model.js") (app);

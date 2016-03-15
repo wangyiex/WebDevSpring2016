@@ -1,31 +1,55 @@
 module.exports = function(app, userModel) {
-    app.post("/api/assignment/user", createUser);
+
     app.get("/api/assignment/user", findAllUsers);
-    app.get("/api/assignment/user/:id", findUserById);
-    app.get(" /api/assignment/user?username=:username", findUserByName);
-    app.get("/api/assignment/user?username=:username&password=:password", findUserByCredential);
+    app.post("/api/assignment/login", findUserByCredential);
+    app.post("/api/assignment/user", createUser);
+    app.get("/api/assignment/user?username=:username", findUserByUsername);
     app.put("/api/assignment/user/:id", updateUserById);
     app.delete("/api/assignment/user/:id", deleteUserById);
 
-    function createUser() {
+    //the implementation of finding all users in server side
+    function findAllUsers(req,res) {
+        var users = userModel.findAllUsers();
+        res.json(users);
+    }
+
+    //the implementation of finding user by username and password
+    function findUserByCredential(req, res) {
+        var credentials = req.body;
+        var user = userModel.findUserByCredential(credentials);
+        res.json(user);
+    }
+
+    //the implementation of creating user
+    function createUser(req,res) {
+        console.log("jinlaile");
+        var newuser = req.body;
+        var user = userModel.createUser(newuser);
+        res.json(user);
 
     }
-    function findAllUsers() {
-
+    //the implementation of finding user by username in server service
+    function findUserByUsername(req,res) {
+        var username = req.query.username;
+        console.log(username);
+        var user = userModel.findUserByUsername(username);
+        res.json(user);
     }
-    function findUserById() {
 
+    //the implementation of updating user by id in server service
+    function updateUserById(req,res) {
+        var id = req.params.id;
+        var user = req.body;
+        var updateuser = userModel.updateUser(id, user);
+        console.log(updateuser);
+        res.json(updateuser);
     }
-    function findUserByName() {
 
-    }
-    function findUserByCredential() {
-
-    }
-    function updateUserById() {
-
-    }
-    function deleteUserById() {
+    //the implementation of deleting user by id
+    function deleteUserById(req,res) {
+        var id = req.params.id;
+        var users = userModel.deleteUser(id);
+        res.json(users);
 
     }
 

@@ -3,71 +3,44 @@
         .module("FormBuilderApp")
         .factory("UserService", UserService);
 
-    function UserService() {
-        var users = [
-            {	"_id":123, "firstName":"Alice","lastName":"Wonderland",
-                "username":"alice","password":"alice","roles": ["student"]		},
-            {	"_id":234, "firstName":"Bob", "lastName":"Hope",
-                "username":"bob","password":"bob", "roles": ["admin"]		},
-            {	"_id":345, "firstName":"Charlie", "lastName":"Brown",
-                "username":"charlie","password":"charlie", "roles": ["faculty"]		},
-            {	"_id":456, "firstName":"Dan", "lastName":"Craig",
-                "username":"dan","password":"dan", "roles": ["faculty", "admin"]},
-            {	"_id":567, "firstName":"Edward", "lastName":"Norton",
-                "username":"ed","password":"ed","roles": ["student"]		}
-        ];
-
-
+    function UserService($http) {
         var service = {
+            findUserByUsername:findUserByUsername,
             findUserByCredentials: findUserByCredentials,
             findAllUsers:findAllUsers,
             createUser:createUser,
-            deleteUserById:deleteUserById,
-            updateUser:updateUser,
+            updateUser:updateUser
         };
         return service;
 
+        //The implementation of finding user by username
+        function findUserByUsername(username) {
+            return $http.get("/api/assignment/user?username=:username");
+        }
+
+        //The implementation of finding user by username and password
         function findUserByCredentials(username, password) {
-            var loginuser;
-            for(u in users) {
-                if(users[u].username==username && users[u].password == password) {
-                    loginuser = users[u];
-                }
-            }
-            return loginuser;
-
+            var user = {
+                username:username,
+                password:password
+            };
+            return $http.post("/api/assignment/login", user);
         }
 
-        function createUser(user) {
-            var newuser= {"_id":(new Date).getTime(),"username":user.username,"password":user.password, "roles":["student"] };
-            users.push(newuser);
-            return newuser;
-
-        }
-        function deleteUserById(userId, callback) {
-
-        }
-        function updateUser(userId, user, callback) {
-            var updateUser;
-            for (u in users) {
-                if(users[u]._id == userId) {
-                    updateUser = users[u];
-                    console.log(updateUser);
-                }
-            }
-            updateUser = {
-                _id:updateUser._id,
-                firstname:user.firstname,
-                lastname:user.lastname,
-                username:user.username,
-                password:user.password,
-                roles:updateUser.roles
-            }
-            callback(updateUser);
-
-        }
+        //The implementation of finding all users
         function findAllUsers(callback) {
-            return users;
+             return $http.get("/api/assignment/user");
         }
+
+        //The implementation of creating user
+        function createUser(user) {
+           return $http.post("/api/assignment/user",user);
+        }
+
+        //the implementation of updating a user
+        function updateUser(userid, user) {
+            return $http.put("/api/assignment/user/"+userid, user);
+        }
+
     }
 })();
