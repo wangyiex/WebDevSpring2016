@@ -1,6 +1,4 @@
-/**
- * Created by costa on 2/21/2016.
- */
+
 (function(){
     angular
         .module("FormBuilderApp")
@@ -18,27 +16,27 @@
 
         //the implementation of creating field for form
         function createFieldForForm(formId, field) {
-
+            return $http.post("/api/assignment/form/" + formId +"/field", field);
         }
 
         //the implementation of geting fields for form
         function getFieldsForForm(formId) {
-
+            return $http.get("/api/assignment/form/" + formId + "/field");
         }
 
         //the implementation of geting field for form
         function getFieldForForm(formId, fieldId) {
-
+            return $http.get("/api/assignment/form/" + formId + "/field/" + fieldId);
         }
 
         //the implementation of deleting field for form
         function deleteFieldForForm(formId, fieldId) {
-
+            return $http.delete("/api/assignment/form/" + formId + "/field/" + fieldId);
         }
 
         //the implementation of updating field
         function updateField(formId, fieldId, field) {
-
+            return $http.put(" /api/assignment/form/" + formId + "/field/" + fieldId, field);
         }
     }
 })();
