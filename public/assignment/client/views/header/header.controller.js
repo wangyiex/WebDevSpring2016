@@ -10,7 +10,6 @@
         function logout() {
             $rootScope.currentuser = null;
             $location.url("/home");
-
         }
     }
 })();

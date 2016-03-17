@@ -14,34 +14,70 @@
         $scope.deleteForm = deleteForm;
         $scope.selectForm = selectForm;
 
-        //events
-        FormService.findAllFormsForUser($rootScope.currentuser._id,function(formsforuser){
-           $scope.forms = formsforuser;
-        });
-
-        function addForm(formname) {
-            if(formname) {
-                FormService.createFormForUser($rootScope.currentuser._id, formname, function (newform) {
-                    $scope.forms.push(newform);
+        //init function witch called when the controller is loaded
+        function init() {
+            FormService
+                .findAllFormsForUser($rootScope.currentuser._id)
+                .then(function (response) {
+                    $scope.forms = response.data;
                 });
+        }
+        init();
+
+        //the implementatioin of adding a form on client side
+        function addForm(form) {
+            if(form) {
+                FormService
+                    .createFormForUser($rootScope.currentuser._id,form)
+                    .then(function() {
+                        return FormService
+                            .findAllFormsForUser($rootScope.currentuser._id);
+                    })
+                    .then(function(response) {
+                        $scope.forms = response.data;
+                        console.log($scope.forms);
+                    });
             }
         }
 
-        function updateForm(formname) {
-            $scope.forms[$scope.selectedFormIndex].title = formname;
-
+        //the implementation of updating form on client side
+        function updateForm(form) {
+            var formId = form._id;
+            var newform = form;
+            FormService
+                .updateFormById(formId, newform)
+                .then(function(){
+                    return FormService
+                        .findAllFormsForUser($rootScope.currentuser._id);
+                })
+                .then(function(response) {
+                $scope.forms = response.data;
+            })
+                .then(function() {
+                   $scope.form = {};
+                });
         }
+
+        //the implementation of deleting form on client side
         function deleteForm(index) {
-            console.log("haha"+index);
-            FormService.deleteFormById(index);
-            $scope.forms.splice(index,1);
+            FormService
+                .deleteFormById(index)
+                .then(function() {
+                    return FormService.findAllFormsForUser($rootScope.currentuser._id);
+                })
+                .then(function(response) {
+                   $scope.forms = response.data;
+                });
         }
-        function selectForm(index) {
-            $scope.formname = $scope.forms[index].title;
-            $scope.selectedFormIndex = index
+
+        //the implementation of selecting form on client side
+        function selectForm(form) {
+            $scope.form = {
+                "_id": form._id,
+                "title":form.title,
+                "userId":form.userId,
+                "fields":form.fields
+            }
         }
-
-
-
     }
 })();

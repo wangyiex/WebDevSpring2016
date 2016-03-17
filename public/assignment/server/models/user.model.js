@@ -2,14 +2,20 @@ var users = require("./user.mock.json");
 module.exports = function (app) {
 
     var api = {
+        findAllUsers:findAllUsers,
         findUserByCredential: findUserByCredential,
         findUserByUsername:findUserByUsername,
-        findAllUsers:findAllUsers,
+        findUserById:findUserById,
         createUser:createUser,
         updateUser:updateUser,
         deleteUser:deleteUser
     };
     return api;
+
+    //the implementation of finding all users in server user model
+    function findAllUsers() {
+        return users;
+    }
 
     //the implementation of finding user by username and password in server user model
     function findUserByCredential (credential) {
@@ -25,20 +31,24 @@ module.exports = function (app) {
     //the implementation of finding user by username in server user model
     function findUserByUsername (username) {
         for(var u in users) {
-            if(users[u].username == username) {
+            if (users[u].username == username) {
+                 return users[u];
+            }
+        }
+    }
+
+    //the implementation of finding a user by id
+    function findUserById (userId) {
+        for (var u in users) {
+            if (users[u]._id == userId) {
                 return users[u];
             }
         }
     }
 
-    //the implementation of finding all users in server user model
-    function findAllUsers() {
-        return users;
-    }
-
     //the implementation of creating user
     function createUser(user) {
-        user._id = "ID_" + (new Date()).getTime();
+        user._id = (new Date()).getTime();
         users.push(user);
         return user;
     }

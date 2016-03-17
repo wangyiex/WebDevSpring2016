@@ -22,7 +22,6 @@ module.exports = function(app, userModel) {
 
     //the implementation of creating user
     function createUser(req,res) {
-        console.log("jinlaile");
         var newuser = req.body;
         var user = userModel.createUser(newuser);
         res.json(user);

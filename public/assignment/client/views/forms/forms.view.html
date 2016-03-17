@@ -13,12 +13,12 @@
                     </thead>
                     <tbody>
                     <tr>
-                        <td><input type="text" class="form-control " placeholder="formname"  ng-model="formname"></td>
+                        <td><input type="text" class="form-control " placeholder="formname"  ng-model="form.title"></td>
                         <td>
-                            <a class="btn btn-success pull-right" ng-click="updateForm(formname)">
+                            <a class="btn btn-success pull-right" ng-click="updateForm(form)">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true" ></span>
                             </a>
-                            <a class="btn btn-primary pull-right" ng-click="addForm(formname)">
+                            <a class="btn btn-primary pull-right" ng-click="addForm(form)">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true" ></span>
                             </a>
                         </td>
@@ -27,9 +27,9 @@
                         <td><a> {{form.title}} </a></td>
                         <td>
                             <a class="btn btn-success pull-right">
-                                <span class="glyphicon glyphicon-pencil" aria-hidden="true" ng-click="selectForm($index)"></span>
+                                <span class="glyphicon glyphicon-pencil" aria-hidden="true" ng-click="selectForm(form)"></span>
                             </a>
-                            <a class="btn btn-primary pull-right" ng-click="deleteForm($index)">
+                            <a class="btn btn-primary pull-right" ng-click="deleteForm(form._id)">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true" ></span>
                             </a>
                         </td>

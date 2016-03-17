@@ -6,7 +6,7 @@
         .module("FormBuilderApp")
         .factory("FormService", FormService);
 
-    function FormService() {
+    function FormService($http) {
         var service = {
             createFormForUser:createFormForUser,
             findAllFormsForUser:findAllFormsForUser,
@@ -15,34 +15,24 @@
         };
         return service;
 
-        function createFormForUser(userId, form, callback) {
-            var newform = {
-                _id:(new Date).getTime(),
-                title:form,
-                userId:userId,
-            }
-            forms.push(newform);
-            callback(newform);
-
+        //the implementation of creating form by user id
+        function createFormForUser(userId, form) {
+            console.log(form);
+            return $http.post("/api/assignment/user/" + userId + "/form", form);
         }
-        function findAllFormsForUser(userId, callback) {
-           var userforms = [];
-            for (u in forms) {
-                if(forms[u].userId == userId) {
-                    userforms.push(forms[u]);
-                }
-            }
-            callback(userforms);
 
+        //the implementation of finding all forms by user id
+        function findAllFormsForUser(userId) {
+            return $http.get("/api/assignment/user/" + userId +"/form");
         }
+        //the implementation of deleting form by form id
         function deleteFormById(formId){
-            forms.splice(formId,1);
-
+            return $http.delete("/api/assignment/form/" + formId);
         }
-        function updateFormById(formId, newForm, callback){
-            forms[formId] = newForm;
-            callback;
 
+        //the implementation of updating form by form id
+        function updateFormById(formId, newForm){
+            return $http.put("/api/assignment/form/" + formId, newForm);
         }
 
 
