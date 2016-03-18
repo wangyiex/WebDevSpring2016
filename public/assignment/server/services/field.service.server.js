@@ -19,13 +19,20 @@ module.exports = function(app,formModel,userModel) {
 
     //the implementation of deleting finding field
     function deleteFieldById(req, res) {
-
+        var formId = req.params.formId;
+        var fieldId = req.params.fieldId;
+        formModel.deleteFieldById(formId, fieldId);
+        res.send(200);
     }
 
     //the implementation of creating field by form id
     function createFieldByFormId(req, res) {
+        var newfield = req.body;
+        var formId = req.params.formId;
+        formModel.createFieldByFormId(formId, newfield);
+        res.send(200);
 
-    }
+        }
 
     //the implementation of updating field by id
     function UpdateField(req, res) {

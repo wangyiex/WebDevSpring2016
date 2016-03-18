@@ -7,7 +7,10 @@ module.exports = function (app) {
         findFormById:findFormById,
         createFormById:createFormById,
         updateFormById:updateFormById,
-        findFieldsByFormId:findFieldsByFormId
+        findFieldsByFormId:findFieldsByFormId,
+        findFieldByFieldId:findFieldByFieldId,
+        deleteFieldById:deleteFieldById,
+        createFieldByFormId:createFieldByFormId
     };
     return api;
 
@@ -66,6 +69,37 @@ module.exports = function (app) {
         var form = findFormById(formId);
         var fields = form.fields;
         return fields;
+    }
+
+    //the implementation of finding field by fieldId
+    function findFieldByFieldId(formId, fieldId) {
+        var fields = findFieldsByFormId(formId);
+        var field;
+        for (f in fields) {
+            if (fields[f]._id == fieldId) {
+                field = fields[f];
+            }
+        }
+        return field;
+    }
+
+    //the implementation of deleting field by id
+    function deleteFieldById(formId, fieldId) {
+        var field = findFieldByFieldId(formId, fieldId);
+        var form = findFormById(formId);
+        var index = form.fields.indexOf(field);
+        form.fields.splice(index,1);
+        console.log(form);
+        return
+    }
+
+    //the implementation of creating field for form
+    function createFieldByFormId(formId, field) {
+        var newfield = field;
+        field._id = (new Date()).getTime();
+        var form = findFormById(formId);
+        form.fields.push(newfield);
+        return;
     }
 
 };
