@@ -10,6 +10,7 @@
             FieldService
                 .getFieldsForForm(formId)
                 .then(function (response) {
+                    console.log(response.data);
                     $scope.fields = response.data;
                 });
         }
