@@ -1,4 +1,4 @@
-module.exports = function(app, userModel, formModel) {
+module.exports = function(app,formModel,userModel) {
     app.get("/api/assignment/form/:formId/field", findFieldsByFormId);
     app.get("/api/assignment/form/:formId/field/:fieldId", findFieldsByFieldId);
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldById);
@@ -7,7 +7,9 @@ module.exports = function(app, userModel, formModel) {
 
     //the implementation of finding fields by form id
     function findFieldsByFormId(req, res) {
-
+        var formId = req.params.formId;
+        var fields = formModel.findFieldsByFormId(formId);
+        res.json(fields);
     }
 
     //the implementation of finding fields by fieldId

@@ -6,7 +6,8 @@ module.exports = function (app) {
         deleteFormById:deleteFormById,
         findFormById:findFormById,
         createFormById:createFormById,
-        updateFormById:updateFormById
+        updateFormById:updateFormById,
+        findFieldsByFormId:findFieldsByFormId
     };
     return api;
 
@@ -57,6 +58,14 @@ module.exports = function (app) {
         var form = findFormById(formId);
         form.title = newform.title;
         return null;
+    }
+
+    //the implementation of finding fields by form id
+    function findFieldsByFormId(formId) {
+
+        var form = findFormById(formId);
+        var fields = form.fields;
+        return fields;
     }
 
 };
