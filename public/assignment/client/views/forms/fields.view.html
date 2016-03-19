@@ -1,5 +1,10 @@
-<div class="main">
-    <div class="container col-sm-12">
+<script>
+    $(function() {
+        $( "#sortable" ).sortable({axis:"y"});
+    });
+</script>
+<div class="main" >
+    <div class="container col-sm-12" id="sortable">
         <div class="row">
             <h1>Forms</h1>
              <ul class="nav nav-tabs">
@@ -7,7 +12,8 @@
                  <li role="presentation"  class="active"><a href="#/fields">Fields</a></li>
              </ul>
         </div>
-        <div class="row" ng-repeat="field in fields">
+<div jga-sortable jga-axis="y">
+        <div class="row" ng-repeat="field in fields" >
             <div ng-switch="field.type" class="col-sm-5">
                 <div ng-switch-when="TEXT" class="form-group">
                     <label for="input-{{field._id}}">{{field.label}}</label>
@@ -78,7 +84,7 @@
                 <a class="btn btn-success pull-right" ng-click="removeField(field._id)">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 </a>
-                <a class="btn btn-primary pull-right"  ng-click="addField(field.type)">
+                <a class="btn btn-primary pull-right" >
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                 </a>
                 <a class="btn btn-success pull-right">
@@ -86,7 +92,7 @@
                 </a>
             </div>
         </div>
-
+</div>
         <div class="row col-sm-8">
             <hr/>
         </div>
