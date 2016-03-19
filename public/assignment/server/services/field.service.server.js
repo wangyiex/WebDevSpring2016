@@ -1,6 +1,5 @@
 module.exports = function(app,formModel,userModel) {
     app.get("/api/assignment/form/:formId/field", findFieldsByFormId);
-    app.get("/api/assignment/form/:formId/field/:fieldId", findFieldsByFieldId);
     app.delete("/api/assignment/form/:formId/field/:fieldId", deleteFieldById);
     app.post("/api/assignment/form/:formId/field", createFieldByFormId);
     app.put("/api/assignment/form/:formId/field/:fieldId", UpdateField);
@@ -10,11 +9,6 @@ module.exports = function(app,formModel,userModel) {
         var formId = req.params.formId;
         var fields = formModel.findFieldsByFormId(formId);
         res.json(fields);
-    }
-
-    //the implementation of finding fields by fieldId
-    function findFieldsByFieldId(req, res) {
-
     }
 
     //the implementation of deleting finding field
@@ -36,6 +30,10 @@ module.exports = function(app,formModel,userModel) {
 
     //the implementation of updating field by id
     function UpdateField(req, res) {
-
+        var formId = req.params.formId;
+        var fieldId = req.params.fieldId;
+        var newfield = req.body;
+        formModel.updateField(formId,fieldId,newfield);
+        res.send(200);
     }
 }

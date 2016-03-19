@@ -1,14 +1,16 @@
 (function () {
     angular
         .module("FormBuilderApp")
-        .controller("FieldController",FieldController);
+        .controller("FieldController",FieldController)
+        .controller("DialogController", DialogController);
 
-    function FieldController($routeParams, FieldService,$scope) {
+    function FieldController($routeParams,$uibModal ,FieldService,$scope) {
         var formId = $routeParams.formId;
 
         //event handler
         $scope.removeField = removeField;
         $scope.addField = addField;
+        $scope.editField = editField;
 
         function init() {
             FieldService
@@ -97,6 +99,107 @@
                 .then(function(response) {
                     $scope.fields = response.data;
                 });
+        }
+
+        //the implementation of editing field
+        function editField(field) {
+            var modalInstance = $uibModal.open({
+                templateUrl: "views/forms/dialog.view.html",
+                controller: "DialogController",
+                controllerAs: "model",
+                resolve: {
+                    type: function () {
+                        return field.type;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (newField) {
+                FieldService
+                    .updateField(formId, field._id, newField)
+                    .then(function(){
+                        return FieldService
+                            .getFieldsForForm(formId);
+                    })
+                    .then(function(response) {
+                        $scope.fields = response.data;
+                        console.log(response.data);
+                    });
+            });
+        }
+    }
+
+    function DialogController($uibModalInstance, type) {
+        var vm = this;
+
+        vm.ok = ok;
+        vm.cancel = cancel;
+        vm.message = null;
+
+        function init() {
+            vm.type = type;
+        }
+        init();
+
+        function ok(field) {
+            if (typeof field == "undefined") {
+                vm.message = "Please enter something!";
+                return ;
+            }
+            if (!field.label) {
+                vm.message = "The label can not be empty!";
+                return ;
+            }
+
+            if ((type == "TEXT" || type == "TEXTAREA") && !field.placeholder) {
+                vm.message = "The placeholder can not be empty";
+                return ;
+            }
+
+            if ((type == "OPTIONS" || type == "CHECKBOXES" || type == "RADIOS") && !field.options) {
+                vm.message = "The options can not be empty";
+                return ;
+            }
+
+            var newField = {
+                "label" : field.label
+            };
+
+            if (field.placeholder) {
+                newField = {
+                    "label" : field.label,
+                    "placeholder": field.placeholder
+                };
+            }
+
+            if (field.options) {
+                var optionsTemp = [];
+                var info = field.options;
+                var optionArr = info.split("\n");
+                for (var o in optionArr) {
+                    var pair = optionArr[o].split(":");
+                    if (pair.length == 2) {
+                        var option = {
+                            "label": pair[0],
+                            "value": pair[1]
+                        };
+                        optionsTemp.push(option);
+                    } else {
+                        vm.message = "Please follow input format as label:value!";
+                        return ;
+                    }
+                }
+
+                newField = {
+                    "label" : field.label,
+                    "options": optionsTemp
+                };
+            }
+            $uibModalInstance.close(newField);
+        }
+
+        function cancel() {
+            $uibModalInstance.dismiss("cancel");
         }
     }
 })();

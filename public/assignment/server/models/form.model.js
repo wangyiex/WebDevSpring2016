@@ -10,7 +10,8 @@ module.exports = function (app) {
         findFieldsByFormId:findFieldsByFormId,
         findFieldByFieldId:findFieldByFieldId,
         deleteFieldById:deleteFieldById,
-        createFieldByFormId:createFieldByFormId
+        createFieldByFormId:createFieldByFormId,
+        updateField:updateField
     };
     return api;
 
@@ -102,4 +103,20 @@ module.exports = function (app) {
         return;
     }
 
+    //the implementation of update field
+    function updateField(formId,fieldId,newfield) {
+        var field = findFieldByFieldId(formId,fieldId);
+        if (field) {
+            field.label = newfield.label;
+            if (newfield.placeholder) {
+                field.placeholder = newfield.placeholder;
+            }
+            if (newfield.options) {
+                field.options = newfield.options;
+            }
+            return;
+        } else {
+            return null;
+        }
+    }
 };
