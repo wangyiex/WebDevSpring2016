@@ -4,6 +4,7 @@ module.exports = function (app) {
 
     var api = {
         findUserByCredential: findUserByCredential,
+        createUser:createUser,
     };
     return api;
 
@@ -15,5 +16,10 @@ module.exports = function (app) {
             }
         }
         return null;
+    }
+
+    function createUser(newuser) {
+        users.push(newuser);
+        return newuser;
     }
 }

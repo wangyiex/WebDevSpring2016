@@ -5,7 +5,7 @@ module.exports = function(app, userModel) {
 
 
     app.post("/api/project/login", findUserByCredential);
-    app.post("/api/assignment/user", createUser);
+    app.post("/api/project/register", createUser);
     app.put("/api/assignment/user/:id", updateUserById);
     app.delete("/api/assignment/user/:id", deleteUserById);
 

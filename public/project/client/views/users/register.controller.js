@@ -3,10 +3,11 @@
         .module("JobMarketApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($scope, $rootScope,$location,UserService) {
+    function RegisterController($scope,$location,UserService) {
         $scope.register= register;
         $scope.login = login;
 
+        // the implementation of user login
         function login(login) {
             var user = UserService.findUserByCredentials(login.email, login.password);
             if(user){
@@ -14,17 +15,17 @@
                 if(user.roles && user.roles.indexOf('admin') >= 0) {
                     $location.url('/admin');
                 }
-
                 $location.url('/profile');
-
             }
         }
+
+        //the implementation of user registration
         function register(uregister) {
-            console.log("hahah")
-            var newUser = UserService.createUser(uregister);
-            $rootScope.currentuser = newUser;
-            $location.url("/profile");
-            console.log(newUser);
+            UserService.createUser(uregister)
+                .then(function(response) {
+                    UserService.setCurrentUser(response.data);
+                    $location.url("/profile");
+                });
         }
     }
 })();

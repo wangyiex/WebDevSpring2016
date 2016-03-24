@@ -35,9 +35,9 @@
         }
 
         function createUser(user) {
-            var newuser= {"_id":(new Date).getTime(),"username":user.username,"password":user.password, "email":user.email };
-            users.push(newuser);
-            return newuser;
+            var newuser= {"_id":(new Date).getTime(),"username":user.username,
+                "password":user.password, "email":user.email, "likes":[], "roles":["employee"] };
+            return $http.post("/api/project/register",newuser);
 
         }
         function deleteUserById(userId, callback) {
