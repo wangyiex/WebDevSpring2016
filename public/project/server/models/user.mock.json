@@ -1,0 +1,8 @@
+[
+{	"_id":123, "username":"alice","password":"alice","email": "wang.yid@husky.neu.edu",
+"likes":["bob","yidong"],"roles":["student"]},
+{	"_id":234, "username":"bob","password":"bob","email": "bob@gmail.com",
+"likes":["alice","yidong"],"roles":["admin"]},
+{	"_id":456, "username":"yidong","password":"yidong","email": "yidong@gmail.com",
+"likes":[],"roles":["admin"]}
+]

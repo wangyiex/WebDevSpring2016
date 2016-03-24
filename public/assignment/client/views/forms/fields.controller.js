@@ -106,7 +106,7 @@
             var modalInstance = $uibModal.open({
                 templateUrl: "views/forms/dialog.view.html",
                 controller: "DialogController",
-                controllerAs: "model",
+                controllerAs: "models",
                 resolve: {
                     type: function () {
                         return field.type;

@@ -3,16 +3,7 @@
         .module("JobMarketApp")
         .factory("UserService", UserService);
 
-    function UserService() {
-        var users = [
-            {	"_id":123, "username":"alice","password":"alice","email": "wang.yid@husky.neu.edu",
-            "likes":["bob","yidong"],"roles":["student"]},
-            {	"_id":234, "username":"bob","password":"bob","email": "bob@gmail.com",
-                "likes":["alice","yidong"],"roles":["admin"]},
-            {	"_id":456, "username":"yidong","password":"yidong","email": "yidong@gmail.com",
-                "likes":[],"roles":["admin"]}
-        ];
-
+    function UserService($http,$rootScope) {
 
         var service = {
             findUserByCredentials: findUserByCredentials,
@@ -22,18 +13,16 @@
             updateUser:updateUser,
             showprofileByUsername:showprofileByUsername,
             followByName:followByName,
+            setCurrentUser:setCurrentUser
         };
         return service;
 
         function findUserByCredentials(email, password) {
-            var loginuser;
-            for(u in users) {
-                if(users[u].email==email && users[u].password == password) {
-                    loginuser = users[u];
-                }
-            }
-            return loginuser;
-
+           var user = {
+               email:email,
+               password:password,
+           }
+            return $http.post("/api/project/login", user);
         }
         function showprofileByUsername(username) {
             var loginuser;
@@ -99,5 +88,9 @@
                     }
                 }
             }
+
+        function setCurrentUser(user) {
+            $rootScope.currentuser = user;
+        }
     }
 })();

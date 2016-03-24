@@ -12,12 +12,12 @@ module.exports = function (app) {
     };
     return api;
 
-    //the implementation of finding all users in server user model
+    //the implementation of finding all users in server user models
     function findAllUsers() {
         return users;
     }
 
-    //the implementation of finding user by username and password in server user model
+    //the implementation of finding user by username and password in server user models
     function findUserByCredential (credential) {
         for(var u in users) {
             if( users[u].username === credential.username &&
@@ -28,7 +28,7 @@ module.exports = function (app) {
         return null;
     }
 
-    //the implementation of finding user by username in server user model
+    //the implementation of finding user by username in server user models
     function findUserByUsername (username) {
         for(var u in users) {
             if (users[u].username == username) {
