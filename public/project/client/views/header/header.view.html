@@ -8,13 +8,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/home">JobMarket</a>
+            <a class="navbar-brand" href="#/home"><h2>JobMarket</h2></a>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li ng-hide="currentuser"
-                    ng-class="{'active': $location.url()=='/home'}">
+                <li ng-class="{'active': $location.url()=='/home'}">
                     <a href="#/home">Home</a></li>
                 <li ng-hide="currentuser"
                     ng-class="{'active': $location.url()=='/register'}">
