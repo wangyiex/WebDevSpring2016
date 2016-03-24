@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#/home"><h2>JobMarket</h2></a>
+            <h2 class="navbar-brand">JobMarket</h2>
         </div>
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -23,6 +23,8 @@
                     <a href="#/login">Login</a></li>
                 <li ng-show="currentuser">
                     <a href="#/profile"> {{$root.currentuser.username}} </a></li>
+                <li ng-class="{'active': $location.url()=='/search'}">
+                    <a href="#/search">Search Company</a></li>
                 <li ng-show="currentuser.roles.indexOf('admin') >= 0">
                     <a href="#/admin"> Admin </a></li>
                 <li ng-show="currentuser">

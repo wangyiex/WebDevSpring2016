@@ -1,19 +1,17 @@
-<div style="width:100%;background-color: #cacaca">
- <div class="container" style="padding-top:70px;">
+<div style="width:100%;background-image: url(img/32.jpg); background-size: cover;">
+ <div class="container" style="padding-top:70px;min-height: 1000px;
+    height: 100%;">
 
         <div class="row" >
 
-            <div class="col-md-3">
-                <p class="lead"></p>
-            </div>
 
-            <div class="col-md-9" >
-
-                <div class="row carousel-holder">
+            <div class="col-md-12" >
+                <h1> Search for your ideal company! </h1>
+                <div class="row carousel-holder" style="padding-top:50px;">
 
                     <input
                             ng-model="title"
-                            class="form-control">
+                            class="form-control" placeholder="Please type in the company name to search">
                     </input>
                     <button
                             ng-click="search(title)"
@@ -22,7 +20,7 @@
                     </button>
 
                 </div>
-                <div class="row">
+                <div class="row"  >
                     <div class="col-sm-3 col-lg-3 col-md-3" ng-repeat="info in data">
                         <div class="thumbnail">
                             <div class="caption">
