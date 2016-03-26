@@ -7,7 +7,11 @@
         var username = $routeParams.username;
         $scope.follow = follow;
         if(username) {
-            $scope.showuser = UserService.showprofileByUsername(username);
+           UserService
+               .showprofileByUsername(username)
+               .then(function(response) {
+                   $scope.showuser = response.data;
+               })
         }
 
         function follow(username) {

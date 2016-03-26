@@ -1,40 +1,89 @@
-<div class="container" style="padding-top:70px;">
+<style>
+    body
+    {
+        font-family: 'Roboto', sans-serif;
+    }
+    h1 {font-weight:900;}
+    .fb-profile img.fb-image-lg{
+        z-index: 0;
+        width: 100%;
+        margin-bottom: 10px;
+    }
 
+    .fb-image-profile
+    {
+        margin: -80px 10px 0px 50px;
+        z-index: 9;
+        width: 20%;
+        border-radius:50%;
+    }
+
+    @media (max-width:768px)
+    {
+
+        .fb-profile-text>h1{
+            font-weight: 700;
+            font-size:16px;
+        }
+
+        .fb-image-profile
+        {
+            margin: -35px 10px 0px 25px;
+            z-index: 9;
+            width: 20%;
+            border-radius:50%;
+        }
+    }
+</style>
+<div class="container" style="width:100%;">
     <div class="row" >
-
-        <div class="col-md-3">
-            <p class="lead"></p>
-            <div class="list-group">
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <div class="container" style="width:100%;">
+            <div class="fb-profile">
+                <img align="left" class="fb-image-lg" src="img/32.jpg" alt="Profile image example" style="height:300px;margin-top:50px;" />
+                <img align="left"  style="height:200px;" class="fb-image-profile thumbnail" src="https://pbs.twimg.com/profile_images/494048868930056192/bUSZV-oa_400x400.jpeg" alt="Profile image example"/>
+                <div class="fb-profile-text row">
+                    <h1 class="col-sm-6" style="color:black">Profile Page</h1>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Username:</label>
-                    <div class="col-sm-10">
-                       {{showuser}}
-                    </div>
+            <div class="row">
+                <div class="col-sm-9  col-md-10 main">
+                    </br>
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Username: </label>
+                            <div class="col-sm-10">
+                                {{showuser.username}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">First Name: </label>
+                            <div class="col-sm-10">
+                                {{showuser.firstname}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Last Name: </label>
+                            <div class="col-sm-10">
+                                {{showuser.lastname}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label  class="col-sm-2 control-label">Email:</label>
+                            <div class="col-sm-10">
+                                {{showuser.email}}
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="form-group">
-                    <label  class="col-sm-2 control-label">Password:</label>
-                    <div class="col-sm-10">
-                    </div>
+            </div>
+            <div class="row col-sm-3">
+                <h1 style="color:black">Follows:</h1>
+                <div ng-repeat="u in showuser.likes">
+                    <h2 style="font-size: large"><a href="#/other/{{u}}" >{{u}} </a></h2>
                 </div>
-                <div class="form-group">
-                    <label  class="col-sm-2 control-label">Email:</label>
-                    <div class="col-sm-10">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button class="glyphicon glyphicon-thumbs-up form-control" ng-click="follow(showuser.username)"></button>
-                </div>
-                <div class="form-group">
-                    follows:
-                    <div ng-repeat="u in showuser.likes">
-                       <a href="#/other/{{u}}" >{{u}} </a>
-                    </div>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>

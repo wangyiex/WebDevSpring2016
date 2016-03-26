@@ -1,21 +1,17 @@
-/**
- * Created by costa on 3/24/2016.
- */
-module.exports = function(app, userModel) {
+
+module.exports = function(app, companyModel) {
 
 
     app.post("/api/project/login", findUserByCredential);
     app.post("/api/project/register", createUser);
-    app.put("/api/project/update/:id", updateUserById);
-    app.get("/api/project/showprofile/:username", showProfileByUsername);
-    app.get("/api/project/loggedin",loggedin);
+    app.put("/api/assignment/user/:id", updateUserById);
+    app.delete("/api/assignment/user/:id", deleteUserById);
 
 
     //the implementation of finding user by username and password
     function findUserByCredential(req, res) {
         var credentials = req.body;
         var user = userModel.findUserByCredential(credentials);
-        req.session.currentUser = user;
         res.json(user);
     }
 
@@ -23,7 +19,6 @@ module.exports = function(app, userModel) {
     function createUser(req,res) {
         var newuser = req.body;
         var user = userModel.createUser(newuser);
-        req.session.currentUser = user;
         res.json(user);
 
     }
@@ -32,7 +27,6 @@ module.exports = function(app, userModel) {
         var username = req.query.username;
         console.log(username);
         var user = userModel.findUserByUsername(username);
-        req.session.currentUser = user;
         res.json(user);
     }
 
@@ -41,17 +35,16 @@ module.exports = function(app, userModel) {
         var id = req.params.id;
         var user = req.body;
         var updateuser = userModel.updateUser(id, user);
+        console.log(updateuser);
         res.json(updateuser);
     }
 
-    //the implementation of showing profile by username
-    function showProfileByUsername(req, res) {
-        var username = req.params.username;
-        var user = userModel.findUserByUsername(username);
-        res.json(user);
+    //the implementation of deleting user by id
+    function deleteUserById(req,res) {
+        var id = req.params.id;
+        var users = userModel.deleteUser(id);
+        res.json(users);
+
     }
 
-    function loggedin(req, res) {
-        res.json(req.session.currentUser);
-    }
 }

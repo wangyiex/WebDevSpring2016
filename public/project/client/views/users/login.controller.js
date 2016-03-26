@@ -4,7 +4,8 @@
         .controller("LoginController", LoginController)
 
     function LoginController($scope,$location,UserService) {
-        $scope.login = login;
+        var vm = this
+        vm.login = login;
         function login(login) {
             UserService.findUserByCredentials(login.email, login.password)
                 .then(function(response){

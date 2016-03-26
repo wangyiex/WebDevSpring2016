@@ -7,16 +7,16 @@
 
         var service = {
             findUserByCredentials: findUserByCredentials,
-            findAllUsers:findAllUsers,
             createUser:createUser,
-            deleteUserById:deleteUserById,
             updateUser:updateUser,
             showprofileByUsername:showprofileByUsername,
             followByName:followByName,
-            setCurrentUser:setCurrentUser
+            setCurrentUser:setCurrentUser,
+            getCurrentUser:getCurrentUser
         };
         return service;
 
+        //the implementation of finding user by credentials
         function findUserByCredentials(email, password) {
            var user = {
                email:email,
@@ -24,46 +24,23 @@
            }
             return $http.post("/api/project/login", user);
         }
+
+        //the implementation of showing profile by username
         function showprofileByUsername(username) {
-            var loginuser;
-            for(u in users) {
-                if(users[u].username==username) {
-                    loginuser = users[u];
-                }
-            }
-            return loginuser;
+           return $http.get("/api/project/showprofile/"+username);
         }
 
+        //the implementation of creating user
         function createUser(user) {
             var newuser= {"_id":(new Date).getTime(),"username":user.username,
                 "password":user.password, "email":user.email, "likes":[], "roles":["employee"] };
             return $http.post("/api/project/register",newuser);
 
         }
-        function deleteUserById(userId, callback) {
 
-        }
-        function updateUser(userId, user, callback) {
-            var updateUser;
-            for (u in users) {
-                if(users[u]._id == userId) {
-                    updateUser = users[u];
-                    console.log(updateUser);
-                }
-            }
-            updateUser = {
-                _id:updateUser._id,
-                firstname:user.firstname,
-                lastname:user.lastname,
-                username:user.username,
-                password:user.password,
-                roles:updateUser.roles
-            }
-            callback(updateUser);
-
-        }
-        function findAllUsers(callback) {
-            return users;
+        //the implementation of updating user
+        function updateUser(userId, user) {
+            return $http.put("/api/project/update/"+userId, user);
         }
 
         function followByName(username, currentuser) {
@@ -89,8 +66,15 @@
                 }
             }
 
+        //the implementation of set current user
         function setCurrentUser(user) {
-            $rootScope.currentuser = user;
+            $rootScope.currentUser = user;
         }
+
+        //the implementation of geting current user
+        function getCurrentUser() {
+            return $http.get("/api/project/loggedin");
+        }
+
     }
 })();
