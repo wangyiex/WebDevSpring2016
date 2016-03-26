@@ -5,7 +5,7 @@
 
     function DetailController($scope,$rootScope,$routeParams,GlassDoorService,$location) {
        var name = $routeParams.name;
-       var currentuser = $rootScope.currentuser;
+       var currentuser = $rootScope.currentUser;
        $scope.leftreview = leftreview;
         GlassDoorService.findEmployerByName(
             name,
@@ -18,11 +18,13 @@
         $scope.reviews = reviews;
 
         function leftreview(user_review) {
-            if($rootScope.currentuser) {
+            if($rootScope.currentUser) {
                 GlassDoorService.leftreview(name, user_review, currentuser.username);
             }else {
                 $location.url("/login");
             }
+
         }
+
     }
 })();

@@ -79,7 +79,6 @@
 
         //the implementation of logging out
         function logout() {
-            console.log("jinlaile123");
             return $http.post("/api/project/logout");
         }
     }
