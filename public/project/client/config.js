@@ -20,7 +20,11 @@
                 })
                 .when("/other/:username",{
                     templateUrl:"views/users/other.view.html",
-                    controller:"OtherController"
+                    controller:"OtherController",
+                    controllerAs:"model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }
                 })
                 .when("/profile", {
                     templateUrl: "views/users/profile.view.html",

@@ -9,6 +9,7 @@ module.exports = function(app, userModel) {
     app.put("/api/project/update/:id", updateUserById);
     app.get("/api/project/showprofile/:username", showProfileByUsername);
     app.get("/api/project/loggedin",loggedin);
+    app.post("/api/project/logout",logout)
 
 
     //the implementation of finding user by username and password
@@ -51,7 +52,14 @@ module.exports = function(app, userModel) {
         res.json(user);
     }
 
+    //the implementation of loggedin
     function loggedin(req, res) {
         res.json(req.session.currentUser);
+    }
+
+    //the implementation of loging out
+    function logout (req, res) {
+        req.session.destroy();
+        res.send(200);
     }
 }

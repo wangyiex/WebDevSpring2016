@@ -12,7 +12,8 @@
             showprofileByUsername:showprofileByUsername,
             followByName:followByName,
             setCurrentUser:setCurrentUser,
-            getCurrentUser:getCurrentUser
+            getCurrentUser:getCurrentUser,
+            logout:logout
         };
         return service;
 
@@ -76,5 +77,10 @@
             return $http.get("/api/project/loggedin");
         }
 
+        //the implementation of logging out
+        function logout() {
+            console.log("jinlaile123");
+            return $http.post("/api/project/logout");
+        }
     }
 })();
