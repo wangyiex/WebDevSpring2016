@@ -3,7 +3,7 @@
         .module("JobMarketApp")
         .controller("OtherController",OtherController);
 
-    function OtherController($scope,UserService,$rootScope,$location,$routeParams) {
+    function OtherController(UserService,$routeParams) {
         var vm = this;
         var username = $routeParams.username;
 

@@ -10,18 +10,18 @@
                 <div class="row carousel-holder" style="padding-top:50px;">
 
                     <input
-                            ng-model="title"
+                            ng-model="model.title"
                             class="form-control" placeholder="Please type in the company name to search">
                     </input>
                     <button
-                            ng-click="search(title)"
+                            ng-click="model.search(model.title)"
                             class="btn btn-primary btn-block">
                         search
                     </button>
 
                 </div>
                 <div class="row"  >
-                    <div class="col-sm-3 col-lg-3 col-md-3" ng-repeat="info in data">
+                    <div class="col-sm-3 col-lg-3 col-md-3" ng-repeat="info in model.data">
                         <div class="thumbnail">
                             <div class="caption">
                                 <h4 class="pull-right"></h4>

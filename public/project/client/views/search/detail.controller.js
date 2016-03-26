@@ -23,8 +23,6 @@
             }else {
                 $location.url("/login");
             }
-
         }
-
     }
 })();

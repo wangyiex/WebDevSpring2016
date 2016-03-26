@@ -36,25 +36,21 @@
                 })
                 .when("/register",{
                     templateUrl: "views/users/register.view.html",
-                    controller:"RegisterController"
-                })
-                .when("/forms",{
-                    templateUrl: "views/forms/forms.view.html",
-                    controller:"FormController"
-                })
-                .when("/fields",{
-                    templateUrl: "views/forms/fields.view.html",
+                    controller:"RegisterController",
+                    controllerAs:"model"
                 })
                 .when("/admin",{
                     templateUrl: "views/admin/admin.view.html",
                 })
                 .when("/search",{
                     templateUrl: "views/search/search.view.html",
-                    controller:"SearchController"
+                    controller:"SearchController",
+                    controllerAs: "model"
                 })
                 .when("/detail/:name", {
                     templateUrl: "views/search/detail.view.html",
-                    controller:"DetailController"
+                    controller:"DetailController",
+                    controllerAs: "model"
                 })
                 .otherwise({
                     redirectTo: "/home"
