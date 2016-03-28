@@ -3,7 +3,6 @@ module.exports = function(app, userModel) {
     app.get("/api/assignment/user", findAllUsers);
     app.post("/api/assignment/login", findUserByCredential);
     app.post("/api/assignment/user", createUser);
-    app.get("/api/assignment/user?username=:username", findUserByUsername);
     app.put("/api/assignment/user/:id", updateUserById);
     app.delete("/api/assignment/user/:id", deleteUserById);
 
@@ -23,9 +22,17 @@ module.exports = function(app, userModel) {
     //the implementation of creating user
     function createUser(req,res) {
         var newuser = req.body;
-        var user = userModel.createUser(newuser);
-        res.json(user);
-
+        var user = userModel.createUser(newuser)
+            .then(
+                //login user if promise resolved
+                function (doc) {
+                    res.json(user);
+                },
+                //send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
     //the implementation of finding user by username in server service
     function findUserByUsername(req,res) {

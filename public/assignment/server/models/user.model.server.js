@@ -1,4 +1,12 @@
+var q = require("q");
+
 module.exports = function (db, mongoose) {
+
+    // load user schema
+    var UserSchema = require("./user.schema.server.js") (mongoose);
+
+    // create user model form schema
+    var UserModel = mongoose.model('User', UserSchema); // will do CRUD based on the schema we offered
 
     var api = {
         findAllUsers:findAllUsers,
@@ -38,18 +46,38 @@ module.exports = function (db, mongoose) {
 
     //the implementation of finding a user by id
     function findUserById (userId) {
-        for (var u in users) {
-            if (users[u]._id == userId) {
-                return users[u];
+        var deferred = q.defer();
+        UserModel.findById(userId, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
+        });
+        return deferred.promise;
     }
 
     //the implementation of creating user
     function createUser(user) {
-        user._id = (new Date()).getTime();
-        users.push(user);
-        return user;
+
+        //user q to defer the response
+        var deferred = q.defer();
+
+        //  insert new user with mongoose user model's create()
+       UserModel.create(user, function(err, doc) {
+           console.log(doc);
+
+           if (err) {
+               //reject promise if error
+               deferred.reject(err);
+           } else {
+               //resolve promise
+               deferred.resolve(doc);
+           }
+       });
+
+        //return a promise
+        return deferred.promise;
     }
 
     //the implementation of updating a user
