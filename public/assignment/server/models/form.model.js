@@ -1,5 +1,4 @@
-var forms = require("./form.mock.json");
-module.exports = function (app) {
+module.exports = function (db, mongoose) {
 
     var api = {
         findFormsByUserId:findFormsByUserId,
