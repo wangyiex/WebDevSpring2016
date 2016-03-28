@@ -12,7 +12,7 @@ var cookie_secret = "yidong0623";
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.user(cookieParser());
+app.use(cookieParser());
 app.use(session({
     secret: cookie_secret,
     resave: true,
