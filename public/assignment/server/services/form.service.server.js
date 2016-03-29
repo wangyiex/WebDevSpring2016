@@ -7,9 +7,16 @@ module.exports = function(app, formModel,userModel) {
 
     //the implementation of finding forms by user id
     function findFormsByUserId(req, res) {
-        var userId = Number(req.params.userId);
-        var forms = formModel.findFormsByUserId(userId);
-        res.json(forms);
+        var userId = req.params.userId;
+        formModel
+            .findFormsByUserId(userId)
+            .then(
+                function(doc) {
+                    res.json(doc);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                });
     }
 
     //the implementation of finding form by form id
@@ -30,8 +37,18 @@ module.exports = function(app, formModel,userModel) {
     function createFormById(req,res) {
         var userId = req.params.userId;
         var form = req.body;
-        formModel.createFormById(userId, form);
-        res.send(200);
+        formModel
+            .createFormById(userId, form)
+            .then(
+                //login user if promise resolved
+                function (doc) {
+                    res.json(doc);
+                },
+                //send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     //the implementation of updating form by form id

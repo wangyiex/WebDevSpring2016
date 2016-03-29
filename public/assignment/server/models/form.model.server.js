@@ -1,3 +1,4 @@
+var q = require("q");
 module.exports = function (db, mongoose) {
 
 
@@ -33,14 +34,21 @@ module.exports = function (db, mongoose) {
         return form;
     }
     //the implementation of finding forms by user id
-    function findFormsByUserId(userId) {
-        var userforms = [];
-        for (u in forms) {
-            if (forms[u].userId == userId) {
-                userforms.push(forms[u]);
-            }
-        }
-        return userforms;
+    function findFormsByUserId(uId) {
+        var deferred = q.defer();
+        FormModel.find(
+            {
+                userId:uId
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    console.log(doc);
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
     }
 
     //the implementation of deleting form by Id
@@ -53,15 +61,26 @@ module.exports = function (db, mongoose) {
 
     //the implementation of creating form by user id
     function createFormById(userId, form) {
-        console.log(form);
+        var deferred = q.defer();
+
         var newform = {
-            "_id" :(new Date()).getTime(),
+            "userId": userId,
             "title" :form.title,
-            "userId" :userId,
-            "fields":[]
-        }
-        forms.push(newform);
-        return;
+        };
+
+        FormModel.create(newform, function(err, doc) {
+
+            if (err) {
+                //reject promise if error
+                deferred.reject(err);
+            } else {
+                //resolve promise
+                deferred.resolve(doc);
+            }
+        });
+        //return a promise
+        return deferred.promise;
+
     }
 
     //the implementation of updating form by id
