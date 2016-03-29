@@ -1,13 +1,15 @@
 module.exports = function(mongoose) {
 
-    //user mongoose to declare a user schema
-    var UserSchema = mongoose.Schema({
-        userame: String,
-        password: String,
-        firstName : String,
-        lastName: String,
-        email :String,
-        roles :[String]
-    }, {collection: 'project.omdb.user'}); // to do meta configuration to the entire schema define the name of the collection, if you don't provide this, mongoose will create a default name/for you
+    var UserSchema = mongoose.Schema(
+        {
+            username: String,
+            password: String,
+            firstName: String,
+            lastName: String,
+            email: String,
+            roles: [String]
+        }, {collection: 'assignment.formmaker.user'});
+
     return UserSchema;
+
 };

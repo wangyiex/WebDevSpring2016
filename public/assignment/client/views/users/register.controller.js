@@ -30,6 +30,7 @@
             UserService
                 .createUser(uregister)
                 .then(function(response){
+                    console.log(response.data);
                     $rootScope.currentuser = response.data;
                     $location.url("/profile");
                 });

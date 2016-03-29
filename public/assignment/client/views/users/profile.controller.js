@@ -6,18 +6,31 @@
         .module("FormBuilderApp")
         .controller("ProfileController",ProfileController);
 
-    function ProfileController($scope,UserService,$rootScope,$location) {
-        if (!$rootScope.currentuser) {
-            $location.url("/home");
+    function ProfileController(UserService,$rootScope,$location) {
+        var vm = this;
+        vm.update = update;
+
+        function init() {
+            UserService.getCurrentUser()
+                .then(function(response) {
+                   var currentUser = response.data;
+                   if(currentUser) {
+                       vm.currentUser = currentUser;
+                   }
+                });
         }
-        $scope.update = update;
+        init();
         function update(user) {
            UserService
                .updateUser($rootScope.currentuser._id,user)
                .then(function(response){
                    var updateuser = response.data;
+                   console.log("dedao"+updateuser);
                    $rootScope.currentuser = updateuser;
-               });
+                   $location.url("/profile");
+               })
+               .then(function(response) {
+           });
         }
 
     }

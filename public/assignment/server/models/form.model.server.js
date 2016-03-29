@@ -1,5 +1,13 @@
 module.exports = function (db, mongoose) {
 
+
+    // load user schema
+    var FieldSchema = require("./field.schema.server.js") (mongoose);
+    var FormSchema = require("./form.schema.server.js") (mongoose,FieldSchema);
+    // create user model form schema
+    var FieldModel = mongoose.model('Field', FieldSchema); // will do CRUD based on the schema we offered
+    var FormModel = mongoose.model('Form', FormSchema);
+
     var api = {
         findFormsByUserId:findFormsByUserId,
         deleteFormById:deleteFormById,

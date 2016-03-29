@@ -5,6 +5,7 @@ module.exports = function(app, userModel) {
     app.post("/api/assignment/user", createUser);
     app.put("/api/assignment/user/:id", updateUserById);
     app.delete("/api/assignment/user/:id", deleteUserById);
+    app.get("/api/assignment/loggedin",loggedin);
 
     //the implementation of finding all users in server side
     function findAllUsers(req,res) {
@@ -15,8 +16,17 @@ module.exports = function(app, userModel) {
     //the implementation of finding user by username and password
     function findUserByCredential(req, res) {
         var credentials = req.body;
-        var user = userModel.findUserByCredential(credentials);
-        res.json(user);
+        userModel
+            .findUserByCredential(credentials)
+            .then(
+                function (doc) {
+                    req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     //the implementation of creating user
@@ -26,7 +36,8 @@ module.exports = function(app, userModel) {
             .then(
                 //login user if promise resolved
                 function (doc) {
-                    res.json(user);
+                    req.session.currentUser = doc;
+                    res.json(doc);
                 },
                 //send error if promise rejected
                 function (err) {
@@ -37,7 +48,6 @@ module.exports = function(app, userModel) {
     //the implementation of finding user by username in server service
     function findUserByUsername(req,res) {
         var username = req.query.username;
-        console.log(username);
         var user = userModel.findUserByUsername(username);
         res.json(user);
     }
@@ -46,9 +56,16 @@ module.exports = function(app, userModel) {
     function updateUserById(req,res) {
         var id = req.params.id;
         var user = req.body;
-        var updateuser = userModel.updateUser(id, user);
-        console.log(updateuser);
-        res.json(updateuser);
+        userModel
+            .updateUser(id, user)
+            .then(
+                function(doc) {
+                    req.session.currentUser = doc;
+                    res.json(doc);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                });
     }
 
     //the implementation of deleting user by id
@@ -57,6 +74,11 @@ module.exports = function(app, userModel) {
         var users = userModel.deleteUser(id);
         res.json(users);
 
+    }
+
+    //the implementation of getting current user
+    function loggedin(req,res) {
+        res.json(req.session.currentUser);
     }
 
 }

@@ -9,7 +9,8 @@
             findUserByCredentials: findUserByCredentials,
             findAllUsers:findAllUsers,
             createUser:createUser,
-            updateUser:updateUser
+            updateUser:updateUser,
+            getCurrentUser:getCurrentUser
         };
         return service;
 
@@ -42,5 +43,9 @@
             return $http.put("/api/assignment/user/"+userid, user);
         }
 
+        //the implementation of getting current user
+        function getCurrentUser() {
+            return $http.get("/api/assignment/loggedin");
+        }
     }
 })();

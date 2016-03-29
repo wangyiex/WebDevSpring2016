@@ -8,6 +8,7 @@ module.exports = function (db, mongoose) {
     // create user model form schema
     var UserModel = mongoose.model('User', UserSchema); // will do CRUD based on the schema we offered
 
+    //define all the event handler
     var api = {
         findAllUsers:findAllUsers,
         findUserByCredential: findUserByCredential,
@@ -26,13 +27,23 @@ module.exports = function (db, mongoose) {
 
     //the implementation of finding user by username and password in server user models
     function findUserByCredential (credential) {
-        for(var u in users) {
-            if( users[u].username === credential.username &&
-                users[u].password === credential.password) {
-                return users[u];
-            }
-        }
-        return null;
+
+        var deferred = q.defer();
+
+        UserModel.findOne(
+
+            {
+                username: credential.username,
+                password:credential.password
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
     }
 
     //the implementation of finding user by username in server user models
@@ -52,6 +63,7 @@ module.exports = function (db, mongoose) {
                 deferred.reject(err);
             } else {
                 deferred.resolve(doc);
+                console.log(doc);
             }
         });
         return deferred.promise;
@@ -65,7 +77,6 @@ module.exports = function (db, mongoose) {
 
         //  insert new user with mongoose user model's create()
        UserModel.create(user, function(err, doc) {
-           console.log(doc);
 
            if (err) {
                //reject promise if error
@@ -82,12 +93,30 @@ module.exports = function (db, mongoose) {
 
     //the implementation of updating a user
     function updateUser(id, user) {
-        for(var u in users) {
-            if(users[u]._id == id) {
-                users[u] = user;
-                return user;
+        var deferred = q.defer();
+
+        UserModel.update(
+            {_id: id},
+            {
+                $set: {
+                    username: user.username,
+                    password: user.password,
+                    firstName: user.firstName,
+                    lastName: user.lastName,
+                    email: user.email
+                }
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(user);
+                }
             }
-        }
+        );
+
+        return deferred.promise;
+
     }
 
     //the implementation of deleting user by id
