@@ -16,7 +16,6 @@
             FieldService
                 .getFieldsForForm(formId)
                 .then(function (response) {
-                    console.log(response.data);
                     $scope.fields = response.data;
                 });
         }
@@ -42,24 +41,20 @@
             }
             var fieldtype = {
                 "TEXT": {
-                    "_id": null,
                     "label": "New Text Field",
                     "type": "TEXT",
                     "placeholder": "New Field"
                 },
                 "TEXTAREA": {
-                    "_id": null,
                     "label": "New Text Field",
                     "type": "TEXTAREA",
                     "placeholder": "New Field"
                 },
                 "DATE": {
-                    "_id": null,
                     "label": "New Date Field",
                     "type": "DATE"
                 },
                 "DROPDOWN": {
-                    "_id": null,
                     "label": "New Dropdown",
                     "type": "OPTIONS",
                     "options": [
@@ -69,7 +64,6 @@
                     ]
                 },
                 "CHECKBOXES": {
-                    "_id": null,
                     "label": "New Checkboxes",
                     "type": "CHECKBOXES",
                     "options": [
@@ -79,7 +73,6 @@
                     ]
                 },
                 "RADIOS": {
-                    "_id": null,
                     "label": "New Radio Buttons",
                     "type": "RADIOS",
                     "options": [
@@ -97,6 +90,7 @@
                         .getFieldsForForm(formId);
                 })
                 .then(function(response) {
+                    console.log(response.data);
                     $scope.fields = response.data;
                 });
         }

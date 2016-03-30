@@ -22,15 +22,34 @@ module.exports = function(app, formModel,userModel) {
     //the implementation of finding form by form id
     function findFormById(req, res) {
         var formId = req.params.formId;
-        var form = formModel.findFormById(formId);
-        res.json(form);
+        formModel
+            .findFormById(formId)
+            .then(
+                //login user if promise resolved
+                function (doc) {
+                    console.log(doc);
+                    res.json(doc);
+                },
+                //send error if promise rejected
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
     //the implementation of deleting form by form id
     function deleteFormById(req, res) {
         var formId = req.params.formId;
-        var forms = formModel.deleteFormById(formId);
-        res.send(200);
+        formModel
+            .deleteFormById(formId)
+            .then(
+                function (doc) {
+                    res.send(200);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            )
     }
 
     //the implementation of creating form by user id
@@ -55,7 +74,15 @@ module.exports = function(app, formModel,userModel) {
     function updateFormById(req, res) {
         var formId = req.params.formId;
         var newform = req.body;
-        formModel.updateFormById(formId, newform);
-        res.send(200);
+        formModel
+            .updateFormById(formId, newform)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 }

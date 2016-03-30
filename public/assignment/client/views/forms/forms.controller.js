@@ -59,9 +59,10 @@
         }
 
         //the implementation of deleting form on client side
-        function deleteForm(index) {
+        function deleteForm(formId) {
+            console.log(formId);
             FormService
-                .deleteFormById(index)
+                .deleteFormById(formId)
                 .then(function() {
                     return FormService.findAllFormsForUser($rootScope.currentuser._id);
                 })

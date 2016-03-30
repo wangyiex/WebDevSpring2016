@@ -98,7 +98,7 @@
         </div>
         <div class="row col-sm-12">
             <div class="col-sm-5">
-            <select class="form-control" ng-model="fields.fieldType">
+            <select class="form-control" ng-model="option.new">
                 <option disabled selected value> -- Select an option -- </option>
                 <option value="TEXT">Single Line Text Field</option>
                 <option value="TEXTAREA">Multi Line Text Field</option>
@@ -109,8 +109,8 @@
             </select>
             </div>
             <div class="col-sm-3">
-                <a class="btn btn-primary pull-right" ng-click="addField(fields.fieldType)">
-                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                <a class="btn btn-primary pull-right" >
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true" ng-click="addField(option.new)"></span>
                 </a>
             </div>
 

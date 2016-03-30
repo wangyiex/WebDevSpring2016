@@ -25,13 +25,19 @@ module.exports = function (db, mongoose) {
 
     //the implementation of finding form by its id
     function findFormById(formId) {
-        var form;
-        for (u in forms) {
-            if(forms[u]._id == formId) {
-                form = forms[u];
-            }
-        }
-        return form;
+       var deferred = q.defer();
+        FormModel.find(
+            {
+                _id:formId
+            },
+            function(err,doc) {
+                if(err) {
+                    deferred.reject(err);
+                }else {
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
     }
     //the implementation of finding forms by user id
     function findFormsByUserId(uId) {
@@ -44,7 +50,6 @@ module.exports = function (db, mongoose) {
                 if (err) {
                     deferred.reject(err);
                 } else {
-                    console.log(doc);
                     deferred.resolve(doc);
                 }
             });
@@ -53,10 +58,21 @@ module.exports = function (db, mongoose) {
 
     //the implementation of deleting form by Id
     function deleteFormById(formId) {
-        var form = findFormById(formId);
-        var index = forms.indexOf(form);
-        forms.splice(index, 1);
-        return null;
+        var deferred = q.defer();
+
+        FormModel
+            .remove(
+                {_id: formId},
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+
+        return deferred.promise;
     }
 
     //the implementation of creating form by user id
@@ -85,17 +101,41 @@ module.exports = function (db, mongoose) {
 
     //the implementation of updating form by id
     function updateFormById(formId, newform) {
-        var form = findFormById(formId);
-        form.title = newform.title;
-        return null;
+        var deferred = q.defer();
+
+        FormModel.update(
+            {_id: formId},
+            {
+                $set: {
+                    "userId": newform.userId,
+                    "title" :newform.title,
+                }
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+            }
+        );
+        return deferred.promise;
     }
 
     //the implementation of finding fields by form id
     function findFieldsByFormId(formId) {
+        var deferred = q.defer();
+        FormModel.find(
+            {_id:formId},
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+            });
+        return deferred.promise;
 
-        var form = findFormById(formId);
-        var fields = form.fields;
-        return fields;
     }
 
     //the implementation of finding field by fieldId
@@ -122,11 +162,26 @@ module.exports = function (db, mongoose) {
 
     //the implementation of creating field for form
     function createFieldByFormId(formId, field) {
-        var newfield = field;
-        field._id = (new Date()).getTime();
-        var form = findFormById(formId);
-        form.fields.push(newfield);
-        return;
+        var deferred = q.defer();
+
+        FormModel
+            .update(
+                {
+                    _id: formId
+                },
+                {
+                    $push: {fields: field}
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+
+        return deferred.promise;
     }
 
     //the implementation of update field

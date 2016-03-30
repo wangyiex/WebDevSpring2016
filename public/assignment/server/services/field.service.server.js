@@ -7,8 +7,15 @@ module.exports = function(app,formModel,userModel) {
     //the implementation of finding fields by form id
     function findFieldsByFormId(req, res) {
         var formId = req.params.formId;
-        var fields = formModel.findFieldsByFormId(formId);
-        res.json(fields);
+        formModel
+            .findFieldsByFormId(formId)
+            .then(
+                function (doc) {
+                    res.json(doc[0].fields);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
     }
 
     //the implementation of deleting finding field
@@ -22,10 +29,25 @@ module.exports = function(app,formModel,userModel) {
     //the implementation of creating field by form id
     function createFieldByFormId(req, res) {
         var newfield = req.body;
+        console.log("haha",newfield);
         var formId = req.params.formId;
-        formModel.createFieldByFormId(formId, newfield);
-        res.send(200);
-
+        formModel
+            .createFieldByFormId(formId, newfield)
+            .then(
+                function(doc) {
+                    return formModel.findFieldsByFormId(formId);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(fields) {
+                    res.json(fields);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                });
         }
 
     //the implementation of updating field by id

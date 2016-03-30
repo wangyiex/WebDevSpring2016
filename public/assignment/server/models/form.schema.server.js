@@ -4,7 +4,7 @@ module.exports = function(mongoose,FieldSchema) {
         {
             userId: String,
             title: String,
-            fields: FieldSchema,
+            fields: [FieldSchema],
             created: { type: Date, default: Date.now },
             updated:{ type: Date, default: Date.now },
         }, {collection: 'assignment.formmaker.form'});
