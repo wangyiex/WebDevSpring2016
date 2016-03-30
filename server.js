@@ -12,8 +12,8 @@ var connectionString = 'mongodb://127.0.0.1:27017/formmaker';
 //use remote connection string
 //if running in remote server
     if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
-        connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-                process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+        connectionString = admin  + ":" +
+                show + "@" +
                 process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
                 process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
                 process.env.OPENSHITF_APP_NAME;
