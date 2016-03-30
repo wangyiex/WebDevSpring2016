@@ -3,9 +3,10 @@
         .module("FormBuilderApp")
         .directive("jgaSortable", jgaSortable);
 
-    function jgaSortable() {
+    function jgaSortable($routeParams) {
         var start = null;
         var end = null;
+        var formId = $routeParams.formId;
         function link(scope, element, attributes) {
             var jgaAxis = attributes.jgaAxis;
             $(element).sortable({
@@ -15,9 +16,7 @@
                 },
                 stop: function(event, ui) {
                     end = ui.item.index();
-                    var temp = scope.users[start];
-                    scope.users[start] = scope.users[end];
-                    scope.users[end] = temp;
+                    scope.fields.splice(end, 0, scope.fields.splice(start, 1)[0]);
                     scope.$apply();
                 }
             });

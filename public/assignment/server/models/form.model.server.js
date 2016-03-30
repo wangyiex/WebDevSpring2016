@@ -152,12 +152,26 @@ module.exports = function (db, mongoose) {
 
     //the implementation of deleting field by id
     function deleteFieldById(formId, fieldId) {
-        var field = findFieldByFieldId(formId, fieldId);
-        var form = findFormById(formId);
-        var index = form.fields.indexOf(field);
-        form.fields.splice(index,1);
-        console.log(form);
-        return
+        var deferred = q.defer();
+
+        FormModel
+            .update(
+                {
+                    _id: formId
+                },
+                {
+                    $pull: {fields: {_id: fieldId}}
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+
+        return deferred.promise;
     }
 
     //the implementation of creating field for form
