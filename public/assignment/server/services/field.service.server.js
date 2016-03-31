@@ -45,6 +45,7 @@ module.exports = function(app,formModel,userModel) {
     function createFieldByFormId(req, res) {
         var newfield = req.body;
         var formId = req.params.formId;
+        console.log(newfield);
         formModel
             .createFieldByFormId(formId, newfield)
             .then(
@@ -69,8 +70,22 @@ module.exports = function(app,formModel,userModel) {
         var formId = req.params.formId;
         var fieldId = req.params.fieldId;
         var newfield = req.body;
-        formModel.updateField(formId,fieldId,newfield);
-        res.send(200);
+        formModel
+            .updateField(formId,fieldId,newfield)
+            .then(
+                function (doc) {
+                    return formModel.findFieldsByFormId(formId);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                })
+            .then (
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
     }
 
     // the implementation of updating fields by id

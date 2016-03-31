@@ -178,7 +178,6 @@ module.exports = function (db, mongoose) {
     //the implementation of creating field for form
     function createFieldByFormId(formId, field) {
         var deferred = q.defer();
-
         FormModel
             .update(
                 {
@@ -201,19 +200,40 @@ module.exports = function (db, mongoose) {
 
     //the implementation of update field
     function updateField(formId,fieldId,newfield) {
-        var field = findFieldByFieldId(formId,fieldId);
-        if (field) {
-            field.label = newfield.label;
-            if (newfield.placeholder) {
-                field.placeholder = newfield.placeholder;
-            }
-            if (newfield.options) {
-                field.options = newfield.options;
-            }
-            return;
-        } else {
-            return null;
+        var deferred = q.defer();
+
+        var newPlaceholder = "";
+        var newOptions = [];
+
+        if (newfield.placeholder) {
+            newPlaceholder = newfield.placeholder;
         }
+
+        if (newfield.options) {
+            newOptions = newfield.options;
+        }
+        FormModel
+            .update(
+                {
+                    _id: formId,
+                    'fields._id': fieldId
+                },
+                {
+                    $set: {
+                        'fields.$.label': newfield.label,
+                        'fields.$.placeholder': newPlaceholder,
+                        'fields.$.options': newOptions
+                    }
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+        return deferred.promise;
     }
 
     //the implementation of updating fields

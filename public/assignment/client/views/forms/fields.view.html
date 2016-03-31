@@ -23,14 +23,19 @@
                     <label for="input-{{field._id}}">{{field.label}}</label>
                     <textarea class="form-control"
                               placeholder="{{field.placeholder}}"
-                              id="input-{{field._id}}">
-                    </textarea>
+                              id="input-{{field._id}}"></textarea>
                 </div>
 
                 <div ng-switch-when="EMAIL" class="form-group">
                     <label>{{field.label}}</label>
                     <input class="form-control"
                            type="email"
+                           placeholder="{{field.placeholder}}"/>
+                </div>
+                <div ng-switch-when="PASSWORD" class="form-group">
+                    <label>{{field.label}}</label>
+                    <input class="form-control"
+                           type="password"
                            placeholder="{{field.placeholder}}"/>
                 </div>
 
@@ -43,12 +48,12 @@
                     </select>
                 </div>
 
-                <div ng-switch-when="CHECKBOXES" class="form-group">
-                    <label>{{field.label}}</label>
-                    <div class="checkbox" ng-repeat="item in field.options">
-                        <label>
-                            <input type="checkbox" value="{{item.value}}"/>{{item.label}}
-                        </label>
+                <div ng-switch-when="DATE" class="form-group">
+                    <div class="form-group col-xs-10">
+                        <label>{{field.label}}</label>
+                        <div class="dropdown">
+                            <input type="date" id="fields_dateofbirth"/>
+                        </div>
                     </div>
                 </div>
 
@@ -64,14 +69,15 @@
                     </div>
                 </div>
 
-                <div ng-switch-when="DATE" class="form-group">
-                    <div class="form-group col-xs-10">
-                        <label>{{field.label}}</label>
-                        <div class="dropdown">
-                            <input type="date" id="fields_dateofbirth"/>
-                         </div>
+                <div ng-switch-when="CHECKBOXES" class="form-group">
+                    <label>{{field.label}}</label>
+                    <div class="checkbox" ng-repeat="item in field.options">
+                        <label>
+                            <input type="checkbox" value="{{item.value}}"/>{{item.label}}
+                        </label>
                     </div>
                 </div>
+
             </div>
             <div class="col-sm-4">
                 <a class="btn btn-primary pull-right" >
@@ -98,10 +104,13 @@
                 <option disabled selected value> -- Select an option -- </option>
                 <option value="TEXT">Single Line Text Field</option>
                 <option value="TEXTAREA">Multi Line Text Field</option>
-                <option value="DATE">Date Field</option>
+                <option value="EMAIL">Email Field</option>
+                <option value="PASSWORD">Password Field</option>
                 <option value="DROPDOWN">Dropdown Field</option>
-                <option value="CHECKBOXES">Checkboxes Field</option>
+                <option value="DATE">Date Field</option>
                 <option value="RADIOS">Radio Buttons Field</option>
+                <option value="CHECKBOXES">Checkboxes Field</option>
+
             </select>
             </div>
             <div class="col-sm-3">
@@ -113,4 +122,3 @@
         </div>
 </div>
     </div>
-{{fields}}

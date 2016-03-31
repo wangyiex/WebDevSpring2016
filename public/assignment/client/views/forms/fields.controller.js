@@ -50,6 +50,16 @@
                     "type": "TEXTAREA",
                     "placeholder": "New Field"
                 },
+                "EMAIL": {
+                    "label": "New Email Field",
+                    "type": "EMAIL",
+                    "placeholder": "New Field"
+                },
+                "PASSWORD": {
+                    "label": "New Password Field",
+                    "type": "PASSWORD",
+                    "placeholder": "New Field"
+                },
                 "DATE": {
                     "label": "New Date Field",
                     "type": "DATE"
@@ -100,7 +110,7 @@
             var modalInstance = $uibModal.open({
                 templateUrl: "views/forms/dialog.view.html",
                 controller: "DialogController",
-                controllerAs: "models",
+                controllerAs: "model",
                 resolve: {
                     type: function () {
                         return field.type;
@@ -132,6 +142,7 @@
 
         function init() {
             vm.type = type;
+            console.log(vm.type);
         }
         init();
 
