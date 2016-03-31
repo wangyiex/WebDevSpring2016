@@ -3,7 +3,7 @@
         .module("FormBuilderApp")
         .directive("jgaSortable", jgaSortable);
 
-    function jgaSortable($routeParams) {
+    function jgaSortable($routeParams,FieldService) {
         var start = null;
         var end = null;
         var formId = $routeParams.formId;
@@ -18,6 +18,15 @@
                     end = ui.item.index();
                     scope.fields.splice(end, 0, scope.fields.splice(start, 1)[0]);
                     scope.$apply();
+                    FieldService
+                        .updateFields(formId,scope.fields)
+                        .then(function(){
+                            return FieldService
+                                .getFieldsForForm(formId);
+                        })
+                        .then(function(response) {
+                            scope.fields = response.data;
+                        });
                 }
             });
         }

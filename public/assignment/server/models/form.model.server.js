@@ -19,7 +19,8 @@ module.exports = function (db, mongoose) {
         findFieldByFieldId:findFieldByFieldId,
         deleteFieldById:deleteFieldById,
         createFieldByFormId:createFieldByFormId,
-        updateField:updateField
+        updateField:updateField,
+        updateFields:updateFields
     };
     return api;
 
@@ -213,5 +214,28 @@ module.exports = function (db, mongoose) {
         } else {
             return null;
         }
+    }
+
+    //the implementation of updating fields
+    function updateFields(formId, fields) {
+        var deferred = q.defer();
+        FormModel
+            .update(
+                {
+                    _id: formId
+                },
+                {
+                    $set: {
+                        "fields": fields
+                    }
+                },
+                function (err, doc) {
+                    if (err) {
+                        return deferred.reject(err);
+                    }else {
+                        return deferred.resolve(doc);
+                    }
+                });
+        return deferred.promise;
     }
 };

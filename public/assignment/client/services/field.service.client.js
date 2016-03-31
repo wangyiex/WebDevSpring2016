@@ -10,7 +10,8 @@
             getFieldsForForm:getFieldsForForm,
             getFieldForForm:getFieldForForm,
             deleteFieldForForm:deleteFieldForForm,
-            updateField:updateField
+            updateField:updateField,
+            updateFields:updateFields
         };
         return service;
 
@@ -37,6 +38,11 @@
         //the implementation of updating field
         function updateField(formId, fieldId, field) {
             return $http.put(" /api/assignment/form/" + formId + "/field/" + fieldId, field);
+        }
+
+        //the implementation of updating all the fields after dragging
+        function updateFields(formId,field) {
+            return $http.put("/api/assignment/form/"+formId+"/fields",field);
         }
     }
 })();
