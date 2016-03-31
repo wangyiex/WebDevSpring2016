@@ -25,7 +25,6 @@
                .updateUser($rootScope.currentuser._id,user)
                .then(function(response){
                    var updateuser = response.data;
-                   console.log("dedao"+updateuser);
                    $rootScope.currentuser = updateuser;
                    $location.url("/profile");
                })
