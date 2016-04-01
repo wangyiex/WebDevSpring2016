@@ -21,6 +21,7 @@
         }
         init();
         function update(user) {
+            console.log(user);
            UserService
                .updateUser($rootScope.currentuser._id,user)
                .then(function(response){

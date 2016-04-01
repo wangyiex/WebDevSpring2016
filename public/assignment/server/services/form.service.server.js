@@ -27,7 +27,6 @@ module.exports = function(app, formModel,userModel) {
             .then(
                 //login user if promise resolved
                 function (doc) {
-                    console.log(doc);
                     res.json(doc);
                 },
                 //send error if promise rejected

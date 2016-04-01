@@ -12,8 +12,10 @@
              UserService.findUserByCredentials(login.username, login.password)
                  .then(function (response){
                      var user = response.data;
+                     console.log("this is",user);
                      if(user){
                          $rootScope.currentuser = user;
+
                          if(user.roles && user.roles.indexOf('admin') >= 0) {
                              $location.url('/admin');
                          }

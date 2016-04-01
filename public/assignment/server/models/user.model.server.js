@@ -47,7 +47,6 @@ module.exports = function (db, mongoose) {
                 deferred.reject(err);
             } else {
                 deferred.resolve(doc);
-                console.log(doc);
             }
         });
         return deferred.promise;
@@ -56,11 +55,16 @@ module.exports = function (db, mongoose) {
     //the implementation of creating user
     function createUser(user) {
 
+        var newuser = {
+            username:user.username,
+            password:user.password,
+            emails:user.emails
+        }
         //user q to defer the response
         var deferred = q.defer();
 
         //  insert new user with mongoose user model's create()
-       UserModel.create(user, function(err, doc) {
+       UserModel.create(newuser, function(err, doc) {
 
            if (err) {
                //reject promise if error
@@ -86,7 +90,8 @@ module.exports = function (db, mongoose) {
                     password: user.password,
                     firstName: user.firstName,
                     lastName: user.lastName,
-                    email: user.email
+                    emails: user.emails,
+                    phones:user.phones
                 }
             },
             function(err, doc) {

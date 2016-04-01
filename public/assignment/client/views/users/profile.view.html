@@ -33,7 +33,14 @@
                     <label for="profileemail" class="col-sm-2 control-label">Email:</label>
                     <div class="col-sm-10">
                         <input type="email" class="form-control" id="profileemail"
-                               placeholder={{model.currentUser.username}}@gmail.com ng-model="model.currentUser.email">
+                               placeholder={{model.currentUser.username}}@gmail.com ng-model="model.currentUser.emails">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="phone" class="col-sm-2 control-label">Phone Number:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="phone"
+                               placeholder="Please update your telephone number" ng-model="model.currentUser.phones">
                     </div>
                 </div>
                 <div class="form-group">

@@ -32,7 +32,12 @@ module.exports = function(app, userModel) {
     //the implementation of creating user
     function createUser(req,res) {
         var newuser = req.body;
-        var user = userModel.createUser(newuser)
+        var user = {
+            username:newuser.username,
+            password:newuser.password,
+            emails:[newuser.emails],
+        }
+        userModel.createUser(user)
             .then(
                 //login user if promise resolved
                 function (doc) {

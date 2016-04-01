@@ -10,6 +10,7 @@
         $scope.register= register;
 
         function register(uregister) {
+            console.log(uregister);
             $scope.message = null;
             if (uregister == null) {
                 $scope.message = "Please fill in the required fields";
@@ -30,7 +31,6 @@
             UserService
                 .createUser(uregister)
                 .then(function(response){
-                    console.log(response.data);
                     $rootScope.currentuser = response.data;
                     $location.url("/profile");
                 });
