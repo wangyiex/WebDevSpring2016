@@ -6,6 +6,7 @@ module.exports = function(app, userModel) {
     app.put("/api/assignment/user/:id", updateUserById);
     app.delete("/api/assignment/user/:id", deleteUserById);
     app.get("/api/assignment/loggedin",loggedin);
+    app.post("/api/assignment/logout",logout)
 
     //the implementation of finding all users in server side
     function findAllUsers(req,res) {
@@ -81,9 +82,16 @@ module.exports = function(app, userModel) {
 
     }
 
-    //the implementation of getting current user
-    function loggedin(req,res) {
+    //the implementation of loggedin
+    function loggedin(req, res) {
         res.json(req.session.currentUser);
+    }
+
+    //the implementation of log out
+    function logout (req, res) {
+        console.log("logout");
+        req.session.destroy();
+        res.send(200);
     }
 
 }

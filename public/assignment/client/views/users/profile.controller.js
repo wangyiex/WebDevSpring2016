@@ -23,10 +23,10 @@
         function update(user) {
             console.log(user);
            UserService
-               .updateUser($rootScope.currentuser._id,user)
+               .updateUser($rootScope.currentUser._id,user)
                .then(function(response){
                    var updateuser = response.data;
-                   $rootScope.currentuser = updateuser;
+                   $rootScope.currentUser = updateuser;
                    $location.url("/profile");
                })
                .then(function(response) {

@@ -17,8 +17,9 @@
         //init function witch called when the controller is loaded
         function init() {
             FormService
-                .findAllFormsForUser($rootScope.currentuser._id)
+                .findAllFormsForUser($rootScope.currentUser._id)
                 .then(function (response) {
+                    console.log(response.data);
                     $scope.forms = response.data;
                 });
         }
@@ -28,14 +29,13 @@
         function addForm(form) {
             if(form) {
                 FormService
-                    .createFormForUser($rootScope.currentuser._id,form)
+                    .createFormForUser($rootScope.currentUser._id,form)
                     .then(function() {
                         return FormService
-                            .findAllFormsForUser($rootScope.currentuser._id);
+                            .findAllFormsForUser($rootScope.currentUser._id);
                     })
                     .then(function(response) {
                         $scope.forms = response.data;
-                        console.log($scope.forms);
                     });
             }
         }
@@ -48,7 +48,7 @@
                 .updateFormById(formId, newform)
                 .then(function(){
                     return FormService
-                        .findAllFormsForUser($rootScope.currentuser._id);
+                        .findAllFormsForUser($rootScope.currentUser._id);
                 })
                 .then(function(response) {
                 $scope.forms = response.data;
@@ -64,7 +64,7 @@
             FormService
                 .deleteFormById(formId)
                 .then(function() {
-                    return FormService.findAllFormsForUser($rootScope.currentuser._id);
+                    return FormService.findAllFormsForUser($rootScope.currentUser._id);
                 })
                 .then(function(response) {
                    $scope.forms = response.data;
