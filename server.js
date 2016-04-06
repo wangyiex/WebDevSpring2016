@@ -1,9 +1,10 @@
 var express      = require('express');
 var app           = express();
 var bodyParser   = require('body-parser');
+var multer        = require('multer')
+var passport       = require('passport')
 var cookieParser = require('cookie-parser');
 var session       = require('express-session');
-//install and require mongoose library
 var mongoose    = require("mongoose");
 
 //create a default connection string
@@ -26,15 +27,18 @@ var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 var cookie_secret = "yidong0623";
 
-app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+multer();
 app.use(session({
     secret: cookie_secret,
     resave: true,
     saveUninitialized: true
 }));
+app.use(cookieParser());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(__dirname + '/public'));
 
 require("./public/assignment/server/app.js")(app, db, mongoose);
 require("./public/project/server/app.js")(app, db, mongoose);
