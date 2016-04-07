@@ -3,6 +3,7 @@ var LocalStrategy  = require('passport-local').Strategy;
 
 module.exports = function(app, userModel) {
 
+    var auth = authorized;
     app.get("/api/assignment/user", findAllUsers);
     app.post("/api/assignment/login",passport.authenticate('local'), findUserByCredential);
     app.post("/api/assignment/user", createUser);
@@ -69,13 +70,18 @@ module.exports = function(app, userModel) {
         }
         userModel.createUser(user)
             .then(
-                //login user if promise resolved
-                function (doc) {
-                    req.session.currentUser = doc;
-                    res.json(doc);
+                function(user){
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
                 },
-                //send error if promise rejected
-                function (err) {
+                function(err){
                     res.status(400).send(err);
                 }
             );
@@ -123,4 +129,11 @@ module.exports = function(app, userModel) {
         res.send(200);
     }
 
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
 }
