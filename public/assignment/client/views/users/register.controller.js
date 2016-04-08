@@ -28,13 +28,25 @@
                 $scope.message = "Passwords must match";
                 return;
             }
+            if (uregister.emails == null) {
+                $scope.message = "Please include @ in in email";
+                return;
+            }
             UserService
-                .createUser(uregister)
+                .register(uregister)
                 .then(function(response){
-                    $rootScope.currentUser = response.data;
-                    $location.url("/profile");
-                });
-
+                    var user = response.data;
+                    if(user != null) {
+                        $rootScope.currentUser = user;
+                        $location.url("/profile");
+                    }else {
+                        $scope.message = "username has already exist,please try another one"
+                    }
+                },
+                    function(err) {
+                        $scope.error = err;
+                    }
+                );
         }
     }
 })();

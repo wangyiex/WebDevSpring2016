@@ -14,6 +14,9 @@ module.exports = function (db, mongoose) {
         findUserById:findUserById,
         createUser:createUser,
         updateUser:updateUser,
+        findAllUsers:findAllUsers,
+        deleteUser:deleteUser,
+        findUserByUsername:findUserByUsername
     };
     return api;
 
@@ -56,9 +59,13 @@ module.exports = function (db, mongoose) {
     function createUser(user) {
 
         var newuser = {
-            username:user.username,
-            password:user.password,
-            emails:user.emails
+            username: user.username,
+            password: user.password,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            emails: user.emails,
+            phones:user.phones,
+            roles:user.roles
         }
         //user q to defer the response
         var deferred = q.defer();
@@ -91,7 +98,8 @@ module.exports = function (db, mongoose) {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     emails: user.emails,
-                    phones:user.phones
+                    phones:user.phones,
+                    roles:user.roles,
                 }
             },
             function(err, doc) {
@@ -103,5 +111,18 @@ module.exports = function (db, mongoose) {
             }
         );
         return deferred.promise;
+    }
+
+    function findAllUsers() {
+        return UserModel.find();
+    }
+
+    function findUserByUsername(username) {
+        return UserModel.findOne({username: username});
+    }
+
+    function deleteUser(id) {
+        console.log(id);
+        return UserModel.remove({_id: id});
     }
 };

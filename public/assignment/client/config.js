@@ -45,26 +45,38 @@
                 })
                 .when("/admin",{
                     templateUrl: "views/admin/admin.view.html",
+                    controller:"AdminController",
+                    resolve: {
+                        checkAdmin: checkAdmin
+                    }
                 })
                 .otherwise({
                     redirectTo: "/home"
                 });
         });
 
-    function getLoggedIn(UserService, $q) {
+    var checkAdmin = function($q, $timeout, $http, $location, $rootScope)
+    {
         var deferred = $q.defer();
 
-        UserService
-            .getCurrentUser()
-            .then(function(response){
-                var currentUser = response.data;
-                console.log(currentUser);
-                UserService.setCurrentUser(currentUser);
+        $http.get('/api/assignment/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0' && user.roles.indexOf('admin') != -1)
+            {
+                $rootScope.currentUser = user;
                 deferred.resolve();
-            });
+            }
+            else
+            {
+                $location.url("/home");
+            }
+        });
 
         return deferred.promise;
-    }
+    };
+
 
     function checkLoggedIn($q, $timeout, $http, $location, $rootScope)
     {

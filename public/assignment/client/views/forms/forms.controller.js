@@ -19,7 +19,6 @@
             FormService
                 .findAllFormsForUser($rootScope.currentUser._id)
                 .then(function (response) {
-                    console.log(response.data);
                     $scope.forms = response.data;
                 });
         }
