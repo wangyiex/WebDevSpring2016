@@ -1,11 +1,10 @@
-/**
- * Created by costa on 3/24/2016.
- */
+
+
 module.exports = function(app, userModel) {
 
 
-    app.post("/api/project/login", findUserByCredential);
-    app.post("/api/project/register", createUser);
+    app.post("/api/project/login", login);
+    app.post("/api/project/register", register);
     app.put("/api/project/update/:id", updateUserById);
     app.get("/api/project/showprofile/:username", showProfileByUsername);
     app.get("/api/project/loggedin",loggedin);
@@ -13,20 +12,33 @@ module.exports = function(app, userModel) {
 
 
     //the implementation of finding user by username and password
-    function findUserByCredential(req, res) {
+    function login(req, res) {
         var credentials = req.body;
-        var user = userModel.findUserByCredential(credentials);
-        req.session.currentUser = user;
-        res.json(user);
+        userModel.login(credentials)
+            .then(function(user){
+                    if(user){
+                        req.session.currentUser = user;
+                        res.json(user);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
 
     //the implementation of creating user
-    function createUser(req,res) {
+    function register(req,res) {
         var newuser = req.body;
-        var user = userModel.createUser(newuser);
-        req.session.currentUser = user;
-        res.json(user);
-
+        userModel.register(newuser)
+            .then(function(user){
+                    if(user){
+                        req.session.currentUser = user;
+                        res.json(user);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                });
     }
     //the implementation of finding user by username in server service
     function findUserByUsername(req,res) {
@@ -41,8 +53,15 @@ module.exports = function(app, userModel) {
     function updateUserById(req,res) {
         var id = req.params.id;
         var user = req.body;
-        var updateuser = userModel.updateUser(id, user);
-        res.json(updateuser);
+        userModel.updateProfile(id, user)
+            .then(function(user) {
+                console.log(user);
+                req.session.currentUser = user;
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     //the implementation of showing profile by username

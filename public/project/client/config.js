@@ -52,6 +52,11 @@
                     controller:"DetailController",
                     controllerAs: "model"
                 })
+                .when("/resume", {
+                    templateUrl:"views/users/resume.view.html",
+                    controller:"ResumeController",
+                    controllerAs:"model"
+                })
                 .otherwise({
                     redirectTo: "/home"
                 });
