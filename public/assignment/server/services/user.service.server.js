@@ -1,6 +1,6 @@
 var passport        = require('passport');
 var LocalStrategy  = require('passport-local').Strategy;
-
+var bcrypt = require("bcrypt-nodejs");
 module.exports = function(app, userModel) {
 
     var auth = authorized;
@@ -20,11 +20,13 @@ module.exports = function(app, userModel) {
 
     function localStrategy(username, password, done) {
         userModel
-            .findUserByCredential({username: username,password: password})
+            .findUserByCredential({username: username})
             .then(
                 function(user) {
-                    if (!user) { return done(null, false); }
-                    return done(null, user);
+                    if (!user) { return done(null, false);}
+                    if (bcrypt.compareSync(password,user.password)) {
+                        return done(null, user);
+                    }
                 },
                 function(err) {
                     if (err) { return done(err); }
@@ -76,6 +78,7 @@ module.exports = function(app, userModel) {
     //the implementation of creating user
     function register(req,res) {
         var newuser = req.body;
+        newuser.password = bcrypt.hashSync(newuser.password);
         newuser.roles = ['user'];
         userModel
             .findUserByUsername(newuser.username)
@@ -119,6 +122,8 @@ module.exports = function(app, userModel) {
     function updateUser(req,res) {
         var id = req.params.id;
         var user = req.body;
+        user.password = bcrypt.hashSync(user.password);
+        console.log(user);
         userModel
             .updateUser(id, user)
             .then(
@@ -188,7 +193,7 @@ module.exports = function(app, userModel) {
 
     function createUser(req, res) {
         var newUser = req.body;
-        console.log(newUser);
+        newUser.password = bcrypt.hashSync(newUser.password);
         if(newUser.roles && newUser.roles.length > 1) {
             newUser.roles = newUser.roles.split(",");
         } else {

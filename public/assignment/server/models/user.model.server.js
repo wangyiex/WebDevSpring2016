@@ -29,7 +29,6 @@ module.exports = function (db, mongoose) {
 
             {
                 username: credential.username,
-                password:credential.password
             },
             function(err, doc) {
                 if (err) {
