@@ -4,10 +4,38 @@
             <table class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th><span class="glyphicon glyphicon-triangle-bottom"></span>Username</th>
+                            <th>
+                                <a ng-hide="showDscendUsername"
+                                   ng-click="sortAscend('username')"
+                                   class="glyphicon glyphicon-triangle-top">
+                                </a>
+                                <a ng-show="showDscendUsername"
+                                   ng-click="sortDescend('username')"
+                                   class="glyphicon glyphicon-triangle-bottom">
+                                </a>
+                                Username
+                            </th>
                             <th>Password</th>
-                            <th><span class="glyphicon glyphicon-triangle-bottom"></span>First Name</th>
-                            <th><span class="glyphicon glyphicon-triangle-bottom"></span>Last Name</th>
+                            <th> <a ng-hide="showDscendFirstName "
+                                    ng-click="sortAscend('firstName')"
+                                    class="glyphicon glyphicon-triangle-top">
+                            </a>
+                                <a ng-show="showDscendFirstName "
+                                   ng-click="sortDescend('firstName')"
+                                   class="glyphicon glyphicon-triangle-bottom">
+                                </a>
+                                First Name
+                            </th>
+                            <th><a ng-hide="showDscendLastName "
+                                   ng-click="sortAscend('lastName')"
+                                   class="glyphicon glyphicon-triangle-top">
+                            </a>
+                                <a ng-show="showDscendLastName "
+                                   ng-click="sortDescend('lastName')"
+                                   class="glyphicon glyphicon-triangle-bottom">
+                                </a>
+                                Last Name
+                            </th>
                             <th>Roles</th>
                             <th>Actions</th>
                         </tr>
@@ -28,7 +56,7 @@
                                 </a>
                             </td>
                         </tr>
-                        <tr ng-repeat="user in users">
+                        <tr ng-repeat="user in users | orderBy: type">
                             <td>{{user.username}}</td>
                             <td>&nbsp;</td>
                             <td>{{user.firstName}}</td>

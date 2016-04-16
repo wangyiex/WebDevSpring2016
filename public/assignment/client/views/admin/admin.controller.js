@@ -8,7 +8,12 @@
         $scope.updateUser = updateUser;
         $scope.deleteUser = deleteUser;
         $scope.editUser = selectUser;
-
+        $scope.type = 'username';
+        $scope.sortDescend = sortDescend;
+        $scope.sortAscend = sortAscend;
+        $scope.showDscendUsername = true;
+        $scope.showDscendFirstName = true;
+        $scope.showDscendLastName = true;
         function init() {
             UserService
                 .findAllUsers()
@@ -52,5 +57,27 @@
         function handleError(error) {
             $scope.error = error;
         }
+        function sortAscend(type) {
+            $scope.type = type;
+            if (type == "username") {
+                $scope.showDscendUsername = true;
+            } else if (type == "firstName") {
+                $scope.showDscendFirstName = true;
+            } else if (type == "lastName") {
+                $scope.showDscendLastName = true;
+            }
+        }
+
+        function sortDescend(type) {
+            $scope.type = "-" + type;
+            if (type == "username") {
+                $scope.showDscendUsername = false;
+            } else if (type == "firstName") {
+                $scope.showDscendFirstName = false;
+            } else if (type == "lastName") {
+                $scope.showDscendLastName = false;
+            }
+        }
+
     }
 })();
