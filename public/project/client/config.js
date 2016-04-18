@@ -57,6 +57,14 @@
                     controller:"ResumeController",
                     controllerAs:"model"
                 })
+                .when("/employer", {
+                    templateUrl:"views/users/employer.view.html",
+                    controller:"EmployerController",
+                    controllerAs:"model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }
+                })
                 .otherwise({
                     redirectTo: "/home"
                 });

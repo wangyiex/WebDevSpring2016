@@ -13,7 +13,7 @@ module.exports = function (db, mongoose) {
         login: login,
         register:register,
         updateProfile:updateProfile,
-        findUserByUsername:findUserByUsername
+        findUserByEmail:findUserByEmail
     };
     return api;
 
@@ -38,14 +38,6 @@ module.exports = function (db, mongoose) {
 
     //the implementation of creating user
     function register(newuser) {
-        var newuser = {
-            username: newuser.username,
-            password: newuser.password,
-            firstName: newuser.firstName,
-            lastName: newuser.lastName,
-            email: newuser.email,
-            roles:newuser.roles
-        }
         //user q to defer the response
         var deferred = q.defer();
 
@@ -92,13 +84,15 @@ module.exports = function (db, mongoose) {
     }
 
     //the implementation of finding user by username
-    function findUserByUsername(username) {
-        var user;
-        for (var u in users) {
-            if(users[u].username == username) {
-                user = users[u];
-                return user;
+    function findUserByEmail(email) {
+        var deferred = q.defer();
+        UserModel.findOne({email: email}, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
+        });
+        return deferred.promise;
     }
 }

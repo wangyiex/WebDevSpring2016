@@ -12,10 +12,11 @@
                     var user = response.data;
                     if(user) {
                         UserService.setCurrentUser(user);
-                        if (user.roles && user.roles.indexOf('admin') >= 0) {
-                            $location.url('/admin');
+                        if (user.role == "employer") {
+                            $location.url('/employer');
+                        }else {
+                            $location.url('/profile');
                         }
-                        $location.url('/profile');
                     }
                 });
         }

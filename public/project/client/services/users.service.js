@@ -33,9 +33,7 @@
 
         //the implementation of creating user
         function createUser(user) {
-            var newuser= {"_id":(new Date).getTime(),"username":user.username,
-                "password":user.password, "email":user.email, "likes":[], "roles":["employee"] };
-            return $http.post("/api/project/register",newuser);
+            return $http.post("/api/project/register",user);
 
         }
 

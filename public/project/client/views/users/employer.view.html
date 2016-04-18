@@ -2,26 +2,24 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-                <img class="img-square" ng-src="{{model.currentUser.photo}}" style="margin-top:70px;" width="150" height="150"></br>
+            <img class="img-square" ng-src="{{model.currentUser.photo}}" style="margin-top:70px;" width="150" height="150"></br>
             <ul class="nav nav-sidebar">
                 <form action="/api/upload"
                       method="post"
                       enctype="multipart/form-data">
-                <li><input  type="file" name="myFile" class="form-group col-md-offset-1"></li>
-                <li><button class="btn btn-primary" type="submit">Upload new profile picture</button></li>
+                    <li><input  type="file" name="myFile" class="form-group col-md-offset-1"></li>
+                    <li><button class="btn btn-primary" type="submit">Upload new profile picture</button></li>
                 </form>
-                <li><a href="#/search">search employers</a></li>
-                <li><a href="">find a job</a></li>
+                <li><a href="">post a job</a></li>
             </ul>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ul class="nav nav-tabs col-md-8">
                 <li role="presentation" class="active"><a href="#/profile">Update</a></li>
-                <li role="presentation"><a href="#/resume">Resume</a></li>
+                <li role="presentation"><a href="#/resume">View Job List</a></li>
             </ul>
-            <div class="row">
-                <div ng-show="message" class="alert alert-danger" role="alert">{{model.message}}</div>
+            <div class="row" ng-show="false">
                 <div class="col-sm-9  col-md-10 main">
                     </br>
                     <form class="form-horizontal">
@@ -66,10 +64,45 @@
                     </form>
                 </div>
             </div>
-            <div class="row col-sm-3 col-md-offset-1">
-                <h1 style="color:black;" ><small>Follows:</small></h1>
-                <div ng-repeat="u in model.currentUser.likes">
-                    <h2 style="font-size: large"><a href="#/other/{{u}}" >{{u}} </a></h2>
+
+
+            <div class="row" ng-show="true">
+                <div class="col-sm-9  col-md-10 main">
+                    </br>
+                    <form class="form-horizontal">
+
+                        <div class="form-group">
+                            <label for="Username " class="col-sm-2 control-label">Job Title: </label></br>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control" id="a " placeholder="Username"
+                                       ng-model="model.currentUser.username">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Password " class="col-sm-2 control-label">Company: </label></br>
+                            <div class="col-sm-5">
+                                <input type="password" class="form-control" id="b " placeholder="Password"
+                                       ng-model="model.currentUser.password">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Verify Password" class="col-sm-2 control-label">Job Description: </label></br>
+                            <div class="col-sm-10" >
+                                <textarea class="form-control" style="height: 300px;"
+                                          placeholder="{{field.placeholder}}"
+                                          id="input-{{field._id}}"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-2">
+                                <a  class="btn btn-primary  btn-block"
+                                    ng-click="model.update(model.currentUser)">
+                                    Post
+                                </a>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

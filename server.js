@@ -22,10 +22,10 @@ if (process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
 
 //  connect to the database
 var db = mongoose.connect(connectionString);
-
+var cookie_secret = "yidong123";
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
-var cookie_secret = process.env.COOKIE_SECRET;
+var cookie_secret1 = process.env.COOKIE_SECRET;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

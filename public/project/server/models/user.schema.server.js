@@ -7,7 +7,10 @@ module.exports = function(mongoose) {
             firstName: String,
             lastName: String,
             email: String,
-            roles: String
+            role: String,
+            resume:String,
+            photo:{type:String,default:"../public/uploads/1.jpg"},
+            likes:{type:[String],default: ["alice"]}
         }, {collection: 'JobMarket.user'});
 
     return UserSchema;

@@ -1,9 +1,9 @@
 (function(){
     angular
         .module("JobMarketApp")
-        .controller("ProfileController",ProfileController)
+        .controller("EmployerController",EmployerController)
 
-    function ProfileController(UserService,$routeParams,$location) {
+    function EmployerController(UserService,$routeParams,$location) {
         var vm = this;
         var name = $routeParams.name;
         vm.update = update;
@@ -23,7 +23,7 @@
             UserService.updateUser(user._id,user)
                 .then(function(response) {
                     UserService.setCurrentUser(response.data);
-                    $location.url('/profile');
+                    $location.url('/employer');
                 });
         }
     }

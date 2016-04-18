@@ -2,6 +2,8 @@
 
 module.exports = function(app, userModel) {
 
+    var multer  = require('multer');
+    var upload = multer({ dest: __dirname+'/../../public/uploads' });
 
     app.post("/api/project/login", login);
     app.post("/api/project/register", register);
@@ -9,7 +11,7 @@ module.exports = function(app, userModel) {
     app.get("/api/project/showprofile/:username", showProfileByUsername);
     app.get("/api/project/loggedin",loggedin);
     app.post("/api/project/logout",logout)
-
+    app.post ("/api/upload", upload.single('myFile'), uploadImage);
 
     //the implementation of finding user by username and password
     function login(req, res) {
@@ -29,14 +31,26 @@ module.exports = function(app, userModel) {
     //the implementation of creating user
     function register(req,res) {
         var newuser = req.body;
-        userModel.register(newuser)
-            .then(function(user){
-                    if(user){
+        userModel.findUserByEmail(newuser.email)
+            .then(
+                function(user) {
+                    if(user) {
+                        res.json(null);
+                    }else {
+                        return userModel.register(newuser);
+                    }
+                },
+                function (err) {
+                    res.status(400).send(err);
+                })
+            .then(
+                function (user) {
+                    if(user) {
                         req.session.currentUser = user;
                         res.json(user);
                     }
                 },
-                function(err){
+                function (err) {
                     res.status(400).send(err);
                 });
     }
@@ -79,6 +93,16 @@ module.exports = function(app, userModel) {
     //the implementation of loging out
     function logout (req, res) {
         req.session.destroy();
+        res.send(200);
+    }
+
+    function uploadImage(req, res) {
+        var file = req.file;
+        var destination = file.destination;
+        var path = file.path;
+        var originalname = file.originalname;
+        var filename = file.filename;
+        console.log(destination,path,originalname,filename);
         res.send(200);
     }
 }
