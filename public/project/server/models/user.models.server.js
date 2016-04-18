@@ -4,16 +4,21 @@ var q = require("q");
 module.exports = function (db, mongoose) {
 
     // load user schema
-    var UserSchema = require("./user.schema.server.js") (mongoose);
+    var JobSchema = require("./job.schema.server.js") (mongoose);
+    var UserSchema = require("./user.schema.server.js") (mongoose,JobSchema);
 
     // create user model form schema
     var UserModel = mongoose.model('JMUser', UserSchema); // will do CRUD based on the schema we offered
-
+    var JobModel = mongoose.model('JMJob', JobSchema);
     var api = {
         login: login,
         register:register,
         updateProfile:updateProfile,
-        findUserByEmail:findUserByEmail
+        findUserByEmail:findUserByEmail,
+        postJob:postJob,
+        createJob:createJob,
+        findJobs:findJobs,
+        findJobById:findJobById
     };
     return api;
 
@@ -94,5 +99,48 @@ module.exports = function (db, mongoose) {
             }
         });
         return deferred.promise;
+    }
+
+    function postJob(userId,job) {
+        var deferred = q.defer();
+        UserModel.update(
+            {_id: userId},
+            {
+                $push: {job: job}
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function createJob(job) {
+        var deferred = q.defer();
+        JobModel.create(job,
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function findJobs() {
+        return JobModel.find();
+    }
+
+    function findJobById(jobid, employerid) {
+      return  JobModel.find({
+            _id: jobid,
+            owner: employerid
+        });
     }
 }

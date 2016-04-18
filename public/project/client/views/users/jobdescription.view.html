@@ -1,0 +1,40 @@
+<div class="row" >
+    <div class="col-sm-9  col-md-10 main">
+        </br>
+        <form class="form-horizontal">
+
+            <div class="form-group">
+                <label for="title" class="col-sm-2 control-label">Job Title: </label></br>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="title" placeholder="title"
+                           ng-model="model.job[0].title">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="company" class="col-sm-2 control-label">Company: </label></br>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" id="company" placeholder="company"
+                           ng-model="model.job[0].company">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="description" class="col-sm-2 control-label">Job Description: </label></br>
+                <div class="col-sm-10" >
+                                <textarea class="form-control" style="height: 300px;"
+                                          placeholder=""
+                                          ng-model="model.job[0].description"
+                                          id="description"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-2">
+                    <a  class="btn btn-primary  btn-block"
+                        ng-click="model.apply(model.job[0]._id,model.currentUser)">
+                        Apply
+                    </a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

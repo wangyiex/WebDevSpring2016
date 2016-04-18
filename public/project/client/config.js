@@ -65,6 +65,15 @@
                         checkLoggedIn: checkLoggedIn
                     }
                 })
+                .when("/job/:jobId/:employerId",{
+                    templateUrl: "views/users/jobdescription.view.html",
+                    controller :"JobDescriptionController",
+                    controllerAs:"model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }}
+
+                )
                 .otherwise({
                     redirectTo: "/home"
                 });

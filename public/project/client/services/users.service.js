@@ -9,7 +9,11 @@
             findUserByCredentials: findUserByCredentials,
             createUser:createUser,
             updateUser:updateUser,
+            postJob:postJob,
+            createJob:createJob,
+            findJobs:findJobs,
             showprofileByUsername:showprofileByUsername,
+            findJobById:findJobById,
             followByName:followByName,
             setCurrentUser:setCurrentUser,
             getCurrentUser:getCurrentUser,
@@ -40,6 +44,16 @@
         //the implementation of updating user
         function updateUser(userId, user) {
             return $http.put("/api/project/update/"+userId, user);
+        }
+
+        function postJob(job, userId) {
+            return $http.post("/api/project/post/"+userId,job);
+        }
+        function createJob(job) {
+            return $http.post("/api/project/create",job);
+        }
+        function findJobs() {
+            return $http.get("/api/project/jobs");
         }
 
         function followByName(username, currentuser) {
@@ -78,6 +92,9 @@
         //the implementation of logging out
         function logout() {
             return $http.post("/api/project/logout");
+        }
+        function findJobById(jobid,employerid) {
+            return $http.get("/api/project/"+jobid+"/"+employerid);
         }
     }
 })();

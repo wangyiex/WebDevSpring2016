@@ -11,16 +11,16 @@
                 <li><button class="btn btn-primary" type="submit">Upload new profile picture</button></li>
                 </form>
                 <li><a href="#/search">search employers</a></li>
-                <li><a href="">find a job</a></li>
+                <li><a href="#/profile" ng-click="model.showjobs()">find a job</a></li>
             </ul>
         </div>
 
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <ul class="nav nav-tabs col-md-8">
-                <li role="presentation" class="active"><a href="#/profile">Update</a></li>
-                <li role="presentation"><a href="#/resume">Resume</a></li>
+                <li role="presentation" class="active"><a href="#/profile" ng-click="model.showupdate()">Update</a></li>
+                <li role="presentation"><a href="" ng-click="model.showresume()">Resume</a></li>
             </ul>
-            <div class="row">
+            <div class="row" ng-show="model.profile">
                 <div ng-show="message" class="alert alert-danger" role="alert">{{model.message}}</div>
                 <div class="col-sm-9  col-md-10 main">
                     </br>
@@ -66,7 +66,36 @@
                     </form>
                 </div>
             </div>
-            <div class="row col-sm-3 col-md-offset-1">
+
+
+            <div class="row" ng-show="model.resume">
+                <div class="col-sm-9  col-md-10 main">
+                    <embed src="../public/uploads/3.pdf" width="1000px;" height="1000px;">
+                </div>
+            </div>
+
+
+
+            <div class="row" ng-show="model.joblist">
+                <div class="col-sm-9  col-md-10 main">
+                    </br>
+                    <div class="table-responsive border col-xs-8">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
+                            <tr>
+                                <th>Job Name</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="j in model.jobs">
+                                <td><a href="#/job/{{j._id}}/{{j.owner}}"> {{j.title}} </a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row col-sm-3 col-md-offset-1" ng-show="model.profile">
                 <h1 style="color:black;" ><small>Follows:</small></h1>
                 <div ng-repeat="u in model.currentUser.likes">
                     <h2 style="font-size: large"><a href="#/other/{{u}}" >{{u}} </a></h2>

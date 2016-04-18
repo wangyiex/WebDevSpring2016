@@ -12,7 +12,10 @@ module.exports = function(app, userModel) {
     app.get("/api/project/loggedin",loggedin);
     app.post("/api/project/logout",logout)
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
-
+    app.post("/api/project/post/:id",postJob);
+    app.post("/api/project/create",createJob);
+    app.get("/api/project/jobs",findJobs);
+    app.get("/api/project/:jobid/:employerid", findJobById)
     //the implementation of finding user by username and password
     function login(req, res) {
         var credentials = req.body;
@@ -85,6 +88,31 @@ module.exports = function(app, userModel) {
         res.json(user);
     }
 
+    function postJob(req, res) {
+        var userId = req.params.id;
+        var job = req.body;
+        userModel.postJob(userId, job)
+            .then(function(user) {
+                    console.log(user);
+                    req.session.currentUser = user;
+                    res.json(user);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function createJob(req, res) {
+        var job = req.body;
+        userModel.createJob(job)
+            .then(function(doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                });
+    }
+
     //the implementation of loggedin
     function loggedin(req, res) {
         res.json(req.session.currentUser);
@@ -104,5 +132,32 @@ module.exports = function(app, userModel) {
         var filename = file.filename;
         console.log(destination,path,originalname,filename);
         res.send(200);
+    }
+
+    function findJobs(req,res) {
+        userModel
+            .findJobs()
+            .then(
+                function(doc) {
+                    res.json(doc);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                });
+    }
+
+    function findJobById(req,res) {
+        var jobid = req.params.jobid;
+        var employerid = req.params.employerid;
+        userModel
+            .findJobById(jobid, employerid)
+            .then(
+                function(doc) {
+                    res.json(doc);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 }
