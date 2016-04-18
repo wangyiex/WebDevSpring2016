@@ -12,8 +12,10 @@
             postJob:postJob,
             createJob:createJob,
             findJobs:findJobs,
+            applyJob:applyJob,
             showprofileByUsername:showprofileByUsername,
             findJobById:findJobById,
+            findApplicants:findApplicants,
             followByName:followByName,
             setCurrentUser:setCurrentUser,
             getCurrentUser:getCurrentUser,
@@ -95,6 +97,13 @@
         }
         function findJobById(jobid,employerid) {
             return $http.get("/api/project/"+jobid+"/"+employerid);
+        }
+
+        function applyJob(jobid,user) {
+            return $http.post("/api/project/apply/"+jobid, user);
+        }
+        function findApplicants(jobid) {
+            return $http.post("/api/project/applicants/"+jobid);
         }
     }
 })();

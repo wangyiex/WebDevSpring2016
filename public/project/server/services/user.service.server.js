@@ -15,7 +15,9 @@ module.exports = function(app, userModel) {
     app.post("/api/project/post/:id",postJob);
     app.post("/api/project/create",createJob);
     app.get("/api/project/jobs",findJobs);
-    app.get("/api/project/:jobid/:employerid", findJobById)
+    app.get("/api/project/:jobid/:employerid", findJobById);
+    app.post("/api/project/apply/:jobid",applyJob);
+    app.post("/api/project/applicants/:jobid",findApplicants);
     //the implementation of finding user by username and password
     function login(req, res) {
         var credentials = req.body;
@@ -156,6 +158,35 @@ module.exports = function(app, userModel) {
                     res.json(doc);
                 },
                 function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function applyJob(req, res) {
+        var jobid = req.params.jobid;
+        var user = req.body;
+        userModel
+            .applyJob(jobid, user)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function findApplicants(req, res) {
+        var jobid = req.params.jobid;
+        userModel
+            .findApplicants(jobid)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
                     res.status(400).send(err);
                 }
             );

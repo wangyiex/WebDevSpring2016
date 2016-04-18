@@ -18,7 +18,9 @@ module.exports = function (db, mongoose) {
         postJob:postJob,
         createJob:createJob,
         findJobs:findJobs,
-        findJobById:findJobById
+        findJobById:findJobById,
+        applyJob:applyJob,
+        findApplicants:findApplicants
     };
     return api;
 
@@ -142,5 +144,32 @@ module.exports = function (db, mongoose) {
             _id: jobid,
             owner: employerid
         });
+    }
+    function applyJob(jobid, user) {
+        var newuser = {
+            username:user.username,
+            email:user.email
+        }
+        console.log(jobid);
+        var deferred = q.defer();
+        JobModel.update(
+            {_id: jobid},
+            {
+                $push: {applicants: newuser}
+            },
+            function(err, doc) {
+                if (err) {
+                    deferred.reject(err);
+                } else {
+                    deferred.resolve(doc);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
+    function findApplicants(jobid) {
+        return JobModel.findOne(
+            {_id: jobid});
     }
 }

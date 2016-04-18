@@ -21,8 +21,10 @@
                 <li ng-hide="currentUser"
                     ng-class="{'active': $location.url()=='/login'}">
                     <a href="#/login">Login</a></li>
-                <li ng-show="currentUser">
+                <li ng-show="currentUser" ng-if="currentUser.role=='employee'">
                     <a href="#/profile"> Profile </a></li>
+                <li ng-show="currentUser" ng-if="currentUser.role=='employer'">
+                    <a href="#/employer"> Profile </a></li>
                 <li ng-class="{'active': $location.url()=='/search'}">
                     <a href="#/search">Search Company</a></li>
                 <li ng-show="currentUser.roles.indexOf('admin') >= 0">

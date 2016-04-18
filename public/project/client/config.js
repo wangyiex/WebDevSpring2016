@@ -72,10 +72,20 @@
                     resolve: {
                         checkLoggedIn: checkLoggedIn
                     }}
-
+                )
+                .when("/apply/:jobId/list",{
+                    templateUrl: "views/users/applicants.view.html",
+                    controller :"ApplicationController",
+                    controllerAs:"model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }}
                 )
                 .otherwise({
-                    redirectTo: "/home"
+                    redirectTo: "/home",
+                    resolve: {
+                        getLoggedIn: getLoggedIn
+                    }
                 });
         });
 

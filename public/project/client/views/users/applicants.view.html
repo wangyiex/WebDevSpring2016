@@ -1,0 +1,21 @@
+<div class="row col-md-offset-3" >
+    <div class="col-sm-9  col-md-10 main">
+        </br>
+        <div class="table-responsive border col-xs-8">
+            <table class="table table-bordered table-striped ">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="user in model.job.applicants">
+                    <td><a href="#/others/alice"> {{user.username}} </a></td>
+                    <td><a href=""> {{user.email}} </a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

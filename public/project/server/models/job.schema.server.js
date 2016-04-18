@@ -6,7 +6,7 @@ module.exports = function(mongoose) {
             company:String,
             description:String,
             owner:String,
-            applicants:[String],
+            applicants:[{"username":String,"email":String}],
         }, {collection: 'JobMarket.job'});
 
     return JobSchema;

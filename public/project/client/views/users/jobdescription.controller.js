@@ -26,11 +26,10 @@
         }
         init();
 
-        function apply(user) {
-            UserService.updateUser(user._id,user)
+        function apply(jobid,user) {
+            UserService.applyJob(jobid,user)
                 .then(function(response) {
-                    UserService.setCurrentUser(response.data);
-                    $location.url('/employer');
+                    $location.url('/profile');
                 });
         }
 
