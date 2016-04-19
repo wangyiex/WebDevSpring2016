@@ -20,6 +20,7 @@ module.exports = function (db, mongoose) {
         findJobById:findJobById,
         applyJob:applyJob,
         findApplicants:findApplicants,
+        followUser:followUser
     };
     return api;
 
@@ -177,5 +178,31 @@ module.exports = function (db, mongoose) {
     function findApplicants(jobid) {
         return JobModel.findOne(
             {_id: jobid});
+    }
+
+    function followUser(user, id) {
+        var deferred = q.defer();
+        var followuser = {
+            name:user.username,
+            email:user.email
+        }
+        UserModel
+            .update(
+                {
+                    _id: id
+                },
+                {
+                    $push: {likes: followuser}
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+
+        return deferred.promise;
     }
 }

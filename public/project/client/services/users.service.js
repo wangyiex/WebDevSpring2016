@@ -16,7 +16,7 @@
             findUserByEmail:findUserByEmail,
             findJobById:findJobById,
             findApplicants:findApplicants,
-            followByName:followByName,
+            followUser:followUser,
             setCurrentUser:setCurrentUser,
             getCurrentUser:getCurrentUser,
             logout:logout
@@ -104,6 +104,9 @@
         }
         function findApplicants(jobid) {
             return $http.post("/api/project/applicants/"+jobid);
+        }
+        function followUser(user,currentUser) {
+            return $http.post("/api/project/follow/"+currentUser._id,user);
         }
     }
 })();

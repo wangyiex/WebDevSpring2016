@@ -28,6 +28,7 @@ module.exports = function(app, userModel) {
     app.get("/api/project/:jobid/:employerid", findJobById);
     app.post("/api/project/apply/:jobid",applyJob);
     app.post("/api/project/applicants/:jobid",findApplicants);
+    app.post("/api/project/follow/:id",followUser);
     //the implementation of finding user by username and password
     function login(req, res) {
         var credentials = req.body;
@@ -234,6 +235,20 @@ module.exports = function(app, userModel) {
                 function (err) {
                     res.status(400).send(err);
                 }
+            );
+    }
+
+    function followUser(req, res) {
+        var id = req.params.id;
+        var user = req.body;
+        userModel
+            .followUser(user, id)
+            .then(function (doc) {
+                res.json(doc);
+            },
+             function (err) {
+                 res.status(400).send(err);
+             }
             );
     }
 }

@@ -10,7 +10,7 @@ module.exports = function(mongoose,JobSchema) {
             role: String,
             resume:{type:String,default:"3.pdf"},
             photo:{type:String,default:"1.jpg"},
-            likes:{type:[String],default: ["alice"]},
+            likes:[{name:String ,email:String}],
             job:[JobSchema],
         }, {collection: 'JobMarket.user'});
 
