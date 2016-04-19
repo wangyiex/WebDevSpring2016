@@ -154,7 +154,11 @@ module.exports = function(app, userModel) {
         userModel
             .updateProfile(user._id,user)
             .then(function (doc) {
+                if(user.role == "employee"){
                 res.redirect("/project/client/index.html#/profile");
+                }else {
+                    res.redirect("/project/client/index.html#/employer");
+                }
             },function (err) {
                 res.status(400).send(err);
             });
@@ -171,7 +175,7 @@ module.exports = function(app, userModel) {
         userModel
             .updateProfile(user._id,user)
             .then(function (doc) {
-                res.redirect("/project/client/index.html#/profile");
+                    res.redirect("/project/client/index.html#/profile");
             },function (err) {
                 res.status(400).send(err);
             });
