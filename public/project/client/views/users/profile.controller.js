@@ -24,6 +24,7 @@
                         vm.currentUser = currentUser;
                     }
                 });
+
         }
         init();
 
