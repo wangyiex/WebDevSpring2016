@@ -21,7 +21,6 @@ module.exports = function (db, mongoose) {
         findJobById:findJobById,
         applyJob:applyJob,
         findApplicants:findApplicants,
-        getMongooseModel:getMongooseModel
     };
     return api;
 

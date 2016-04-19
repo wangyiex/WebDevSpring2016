@@ -70,8 +70,17 @@
 
             <div class="row" ng-show="model.resume">
                 <div class="col-sm-9  col-md-10 main">
-                    <embed src="../public/uploads/3.pdf" width="1000px;" height="1000px;">
+                    <embed ng-src="{{model.safe()}}" width="1000px;" height="1000px;">
+                        <ul class="nav nav-sidebar">
+                        <form action="/api/upload/resume"
+                              method="post"
+                              enctype="multipart/form-data">
+                            <li><input  type="file" name="myFile1" class="form-group col-md-offset-5"></li>
+                            <li><button class="btn btn-primary" type="submit">Upload new resume</button></li>
+                        </form>
+                            </ul>
                 </div>
+
             </div>
 
 
@@ -95,7 +104,7 @@
                     </div>
                 </div>
             </div>
-                <div class="row col-sm-3 col-md-offset-1" ng-show="true">
+                <div class="row col-sm-3 col-md-offset-1" ng-show="model.profile">
                 <h1 style="color:black;" ><small>Follows:</small></h1>
                 <div ng-repeat="u in model.currentUser.likes">
                     <h2 style="font-size: large"><a href="#/other/{{u}}" >{{u}} </a></h2>

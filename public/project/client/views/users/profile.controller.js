@@ -3,7 +3,7 @@
         .module("JobMarketApp")
         .controller("ProfileController",ProfileController)
 
-    function ProfileController(UserService,$routeParams,$location) {
+    function ProfileController(UserService,$routeParams,$location,$sce) {
         var vm = this;
         var name = $routeParams.name;
         vm.update = update;
@@ -14,6 +14,7 @@
         vm.joblist = false;
         vm.profile = true;
         vm.resume = false;
+        vm.safe = safe;
         function init() {
             UserService
                 .getCurrentUser()
@@ -53,6 +54,12 @@
             vm.profile = false;
             vm.joblist = false;
             vm.resume = true;
+        }
+
+        function safe(url) {
+            var a =vm.currentUser.resume;
+            console.log(a);
+            return"../../project/public/uploads/"+a;
         }
     }
 })();

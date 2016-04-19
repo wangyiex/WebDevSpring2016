@@ -4,7 +4,16 @@ module.exports = function(app, userModel) {
 
     var multer  = require('multer');
     var upload = multer({ dest: __dirname+'/../../public/uploads' });
+    var storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, __dirname+'/../../public/uploads')
+        },
+        filename: function (req, file, cb) {
+            cb(null, Date.now() + ".pdf")
+        }
+    })
 
+    var upload2 = multer({ storage: storage});
     app.post("/api/project/login", login);
     app.post("/api/project/register", register);
     app.put("/api/project/update/:id", updateUserById);
@@ -12,6 +21,7 @@ module.exports = function(app, userModel) {
     app.get("/api/project/loggedin",loggedin);
     app.post("/api/project/logout",logout)
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
+    app.post ("/api/upload/resume", upload2.single('myFile1'), uploadresume);
     app.post("/api/project/post/:id",postJob);
     app.post("/api/project/create",createJob);
     app.get("/api/project/jobs",findJobs);
@@ -141,6 +151,23 @@ module.exports = function(app, userModel) {
         var originalname = file.originalname;
         var filename = file.filename;
         user.photo = filename;
+        userModel
+            .updateProfile(user._id,user)
+            .then(function (doc) {
+                res.redirect("/project/client/index.html#/profile");
+            },function (err) {
+                res.status(400).send(err);
+            });
+    }
+
+    function uploadresume(req, res) {
+        var user = req.session.currentUser;
+        var file = req.file;
+        var destination = file.destination;
+        var path = file.path;
+        var originalname = file.originalname;
+        var filename = file.filename;
+        user.resume = filename;
         userModel
             .updateProfile(user._id,user)
             .then(function (doc) {

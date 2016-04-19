@@ -8,8 +8,8 @@ module.exports = function(mongoose,JobSchema) {
             lastName: String,
             email: String,
             role: String,
-            resume:String,
-            photo:{type:String,default:"../public/uploads/1.jpg"},
+            resume:{type:String,default:"3.pdf"},
+            photo:{type:String,default:"1.jpg"},
             likes:{type:[String],default: ["alice"]},
             job:[JobSchema],
         }, {collection: 'JobMarket.user'});
