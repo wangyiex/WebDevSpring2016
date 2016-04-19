@@ -5,14 +5,15 @@
 
     function OtherController(UserService,$routeParams) {
         var vm = this;
-        var username = $routeParams.username;
+        var email = $routeParams.email;
 
         function init() {
-            if (username) {
+            if (email) {
                 UserService
-                    .showprofileByUsername(username)
+                    .findUserByEmail(email)
                     .then(function (response) {
                         vm.showuser = response.data;
+                        console.log(vm.showuser);
                     })
             }
         }

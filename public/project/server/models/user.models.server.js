@@ -20,9 +20,14 @@ module.exports = function (db, mongoose) {
         findJobs:findJobs,
         findJobById:findJobById,
         applyJob:applyJob,
-        findApplicants:findApplicants
+        findApplicants:findApplicants,
+        getMongooseModel:getMongooseModel
     };
     return api;
+
+    function getMongooseModel() {
+        return UserModel;
+    }
 
     //the implementation of finding user by username and password
     function login (credential) {
@@ -76,7 +81,10 @@ module.exports = function (db, mongoose) {
                     firstName: user.firstName,
                     lastName: user.lastName,
                     email: user.email,
-                    roles:user.roles
+                    likes:user.likes,
+                    roles:user.roles,
+                    job:user.job,
+                    photo:user.photo
                 }
             },
             function(err, doc) {

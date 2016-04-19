@@ -8,7 +8,7 @@ module.exports = function(app, userModel) {
     app.post("/api/project/login", login);
     app.post("/api/project/register", register);
     app.put("/api/project/update/:id", updateUserById);
-    app.get("/api/project/showprofile/:username", showProfileByUsername);
+    app.post("/api/project/finduser/:email", findUserByEmail);
     app.get("/api/project/loggedin",loggedin);
     app.post("/api/project/logout",logout)
     app.post ("/api/upload", upload.single('myFile'), uploadImage);
@@ -84,10 +84,16 @@ module.exports = function(app, userModel) {
     }
 
     //the implementation of showing profile by username
-    function showProfileByUsername(req, res) {
-        var username = req.params.username;
-        var user = userModel.findUserByUsername(username);
-        res.json(user);
+    function findUserByEmail(req, res) {
+        var email = req.params.email;
+        userModel
+            .findUserByEmail(email)
+            .then(function(user) {
+                res.json(user);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function postJob(req, res) {
@@ -126,14 +132,22 @@ module.exports = function(app, userModel) {
         res.send(200);
     }
 
+    //the implementation of uploading image and resume
     function uploadImage(req, res) {
+        var user = req.session.currentUser;
         var file = req.file;
         var destination = file.destination;
         var path = file.path;
         var originalname = file.originalname;
         var filename = file.filename;
-        console.log(destination,path,originalname,filename);
-        res.send(200);
+        user.photo = filename;
+        userModel
+            .updateProfile(user._id,user)
+            .then(function (doc) {
+                res.redirect("/project/client/index.html#/profile");
+            },function (err) {
+                res.status(400).send(err);
+            });
     }
 
     function findJobs(req,res) {

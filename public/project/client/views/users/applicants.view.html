@@ -11,7 +11,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="user in model.job.applicants">
-                    <td><a href="#/others/alice"> {{user.username}} </a></td>
+                    <td><a href="#/other/{{user.email}}"> {{user.username}} </a></td>
                     <td><a href=""> {{user.email}} </a></td>
                 </tr>
                 </tbody>

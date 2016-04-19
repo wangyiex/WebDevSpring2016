@@ -18,7 +18,7 @@
                     controller:"LoginController",
                     controllerAs: "model"
                 })
-                .when("/other/:username",{
+                .when("/other/:email",{
                     templateUrl:"views/users/other.view.html",
                     controller:"OtherController",
                     controllerAs:"model",

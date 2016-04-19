@@ -13,7 +13,7 @@
             createJob:createJob,
             findJobs:findJobs,
             applyJob:applyJob,
-            showprofileByUsername:showprofileByUsername,
+            findUserByEmail:findUserByEmail,
             findJobById:findJobById,
             findApplicants:findApplicants,
             followByName:followByName,
@@ -33,8 +33,8 @@
         }
 
         //the implementation of showing profile by username
-        function showprofileByUsername(username) {
-           return $http.get("/api/project/showprofile/"+username);
+        function findUserByEmail(email) {
+           return $http.post("/api/project/finduser/"+email);
         }
 
         //the implementation of creating user
