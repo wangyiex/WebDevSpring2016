@@ -1,50 +1,64 @@
 
 module.exports = function(app, companyModel) {
 
+    app.post("/api/project/getreviews/:name",getReviews);
+    app.post("/api/project/putreview/:companyname", putReview);
 
-    app.post("/api/project/login", findUserByCredential);
-    app.post("/api/project/register", createUser);
-    app.put("/api/assignment/user/:id", updateUserById);
-    app.delete("/api/assignment/user/:id", deleteUserById);
-
-
-    //the implementation of finding user by username and password
-    function findUserByCredential(req, res) {
-        var credentials = req.body;
-        var user = userModel.findUserByCredential(credentials);
-        res.json(user);
+    function getReviews(req, res) {
+        var name = req.params.name;
+        companyModel
+            .findReviews(name)
+            .then(
+                function (doc) {
+                    res.json(doc);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
     }
 
-    //the implementation of creating user
-    function createUser(req,res) {
-        var newuser = req.body;
-        var user = userModel.createUser(newuser);
-        res.json(user);
-
-    }
-    //the implementation of finding user by username in server service
-    function findUserByUsername(req,res) {
-        var username = req.query.username;
-        console.log(username);
-        var user = userModel.findUserByUsername(username);
-        res.json(user);
-    }
-
-    //the implementation of updating user by id in server service
-    function updateUserById(req,res) {
-        var id = req.params.id;
+    function putReview(req,res) {
+        var companyname = req.params.companyname;
         var user = req.body;
-        var updateuser = userModel.updateUser(id, user);
-        console.log(updateuser);
-        res.json(updateuser);
-    }
-
-    //the implementation of deleting user by id
-    function deleteUserById(req,res) {
-        var id = req.params.id;
-        var users = userModel.deleteUser(id);
-        res.json(users);
-
+        companyModel
+            .findReviews(companyname)
+            .then(
+                function(reviews){
+                    if(reviews == null) {
+                        return companyModel.createReview(companyname, user)
+                            .then(
+                                // fetch all the users
+                                function(){
+                                    return companyModel.findReviews(companyname);
+                                },
+                                function(err){
+                                    res.status(400).send(err);
+                                }
+                            );
+                        // if the user already exists, then just fetch all the users
+                    } else {
+                        return companyModel.addReview(companyname,user);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(reviews){
+                    return companyModel.findReviews(companyname);
+                },
+                function(){
+                    res.status(400).send(err);
+                }
+            )
+            .then( function (review) {
+                res.json(review);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
     }
 
 }

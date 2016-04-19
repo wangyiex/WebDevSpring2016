@@ -3,28 +3,46 @@
         .module("JobMarketApp")
         .controller("DetailController",DetailController);
 
-    function DetailController($scope,$rootScope,$routeParams,GlassDoorService,$location) {
+    function DetailController(GlassDoorService,UserService,$routeParams,$location) {
+       var vm = this;
+        vm.leftreview = leftreview;
        var name = $routeParams.name;
-       var currentuser = $rootScope.currentUser;
-       $scope.leftreview = leftreview;
-        GlassDoorService.findEmployerByName(
-            name,
-            function(response) {
-                console.log(response);
-                $scope.data = response.response.employers[0];
-                console.log($scope.data);
-            });
-        var reviews = GlassDoorService.findReviewsByName(name);
-        $scope.reviews = reviews;
-
-        function leftreview(user_review) {
-            if($rootScope.currentUser) {
-                GlassDoorService.leftreview(name, user_review, currentuser.username);
-            }else {
-                $location.url("/login");
-            }
-
+        function init() {
+            UserService
+                .getCurrentUser()
+                .then(function (response) {
+                    var user = response.data;
+                    if(user) {
+                        vm.user = user;
+                    }
+                });
+            GlassDoorService.findEmployerByName(
+                name,
+                function (response) {
+                    vm.data = response.response.employers[0];
+                });
+            GlassDoorService
+                .findReviewsByName(name)
+                .then(function (response) {
+                    var reviews = response.data.reviews;
+                    if(reviews) {
+                        vm.reviews = reviews;
+                    }
+                });
         }
-
+        init();
+        function leftreview(review) {
+            var user = vm.user;
+            user.review = review;
+            GlassDoorService
+                .leftreview(name,user)
+                .then(function (response) {
+                    var reviews = response.data;
+                    if(reviews) {
+                        vm.reviews = reviews;
+                    }
+                    $location.url("#/detail/"+name);
+                });
+        }
     }
 })();

@@ -1,25 +1,80 @@
-var users = require("./user.mock.json");
+var q = require("q");
 
-module.exports = function (app) {
+module.exports = function (db, mongoose) {
 
+    // load user schema
+    var CompanySchema = require("./company.schema.server.js") (mongoose);
+
+    // create user model form schema
+    var CompanyModel = mongoose.model('JMCompany', CompanySchema); // will do CRUD based on the schema we offered
     var api = {
-        findUserByCredential: findUserByCredential,
-        createUser:createUser,
+        findReviews:findReviews,
+        addReview:addReview,
+        createReview:createReview
     };
     return api;
 
-    function findUserByCredential (credential) {
-        for(var u in users) {
-            if( users[u].email === credential.email &&
-                users[u].password === credential.password) {
-                return users[u];
+    function findReviews(name) {
+        var deferred = q.defer();
+        CompanyModel.findOne({name: name}, function (err, doc) {
+            if (err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
             }
-        }
-        return null;
+        });
+        return deferred.promise;
     }
 
-    function createUser(newuser) {
-        users.push(newuser);
-        return newuser;
+    function addReview(companyname, user) {
+        var deferred = q.defer();
+        var review =
+        {
+            username:user.username,
+            email:user.email,
+            review:user.review
+        };
+        CompanyModel
+            .update(
+                {
+                    name:companyname
+                },
+                {
+                    $push: {reviews:review}
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+        return deferred.promise;
+    }
+
+    function createReview(companyname, user) {
+        var deferred = q.defer();
+        var review =
+        {
+            username:user.username,
+            email:user.email,
+            review:user.review
+        };
+        var company_review = {
+            name:companyname,
+            reviews:[review]
+        }
+        CompanyModel
+            .create(company_review,function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+        return deferred.promise;
+
     }
 }

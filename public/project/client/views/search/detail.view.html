@@ -5,22 +5,22 @@
             <div class="col-md-10">
 
                 <div class="thumbnail" style="background-color: #cacaca">
-                    <img class="img-responsive" ng-src="{{data.squareLogo}}" style="width: 40%;height: 20%;">
+                    <img class="img-responsive" ng-src="{{model.data.squareLogo}}" style="width: 40%;height: 20%;">
                     <div class="caption-full">
                         <h4 class="pull-right"></h4>
-                        <h4><a href="http://{{data.website}}">{{data.name}}</a></h4>
+                        <h4><a href="http://{{model.data.website}}">{{model.data.name}}</a></h4>
                         <hr class="featurette-divider" id="aa" >
-                        <p>CEO:{{data.ceo.name}}</br>
-                        <img ng-src="{{data.ceo.image.src}}" style="width: 20%;height:20%;">
+                        <p>CEO:{{model.data.ceo.name}}</br>
+                        <img ng-src="{{model.data.ceo.image.src}}" style="width: 20%;height:20%;">
                         </p>
                         <hr class="featurette-divider">
                         <p>Reviews:</p>
-                        <p>Cons:{{data.featuredReview.cons}}</br>
-                           Pros:{{data.featuredReview.pros}}</br>
-                           See more reviews at <a href="http://{{data.featuredReview.attributionURL}}">{{data.featuredReview.attributionURL}}</a>
+                        <p>Cons:{{model.data.featuredReview.cons}}</br>
+                           Pros:{{model.data.featuredReview.pros}}</br>
+                           See more reviews at <a href="{{model.data.featuredReview.attributionURL}}">{{model.data.featuredReview.attributionURL}}</a>
                         </p>
                     </div>
-                    <p>See more information at <a target="_blank" href="http://{{data.website}}">{{data.website}}</a>.</p>
+                    <p>See more information at <a target="_blank" href="http://{{model.data.website}}">{{model.data.website}}</a>.</p>
                     <div class="ratings">
                         <p class="pull-right">3 reviews</p>
                         <p>
@@ -29,7 +29,7 @@
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
-                            {{data.overallRating}} stars
+                            {{model.data.overallRating}} stars
                         </p>
 
                     </div>
@@ -38,10 +38,10 @@
                 <div class="well">
 
                     <div class="text-right">
-                        <textarea class="form-control" style="resize: none" ng-model="user_review"></textarea></br>
-                        <a class="btn btn-success" ng-click="leftreview(user_review)">Leave a Review</a>
+                        <textarea class="form-control" style="resize: none" ng-model="model.review"></textarea></br>
+                        <a class="btn btn-success" ng-click="model.leftreview(model.review)">Leave a Review</a>
                     </div>
-                    <div class="row" ng-repeat="review in reviews">
+                    <div class="row" ng-repeat="review in model.reviews">
                         <hr>
                         <div class="col-md-12">
                             <span class="glyphicon glyphicon-star"></span>
@@ -49,8 +49,8 @@
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star"></span>
                             <span class="glyphicon glyphicon-star-empty"></span>
-                           <a href="#/other/{{review.name}}"> {{review.name}} </a>
-                            <span class="pull-right">10 days ago</span>
+                           <a href="#/other/{{review.email}}"> {{review.username}} </a>
+                            <span class="pull-right">{{review.time | date:'medium'}}</span>
                             <p>{{review.review}}</p>
                         </div>
                     </div>
