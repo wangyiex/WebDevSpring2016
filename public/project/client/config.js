@@ -43,11 +43,17 @@
                     templateUrl: "views/search/search.view.html",
                     controller:"SearchController",
                     controllerAs: "model",
+                    resolve: {
+                        getLoggedIn: getLoggedIn
+                    }
                 })
                 .when("/detail/:name", {
                     templateUrl: "views/search/detail.view.html",
                     controller:"DetailController",
                     controllerAs: "model",
+                    resolve: {
+                        getLoggedIn: getLoggedIn
+                    }
                 })
                 .when("/resume", {
                     templateUrl:"views/users/resume.view.html",
