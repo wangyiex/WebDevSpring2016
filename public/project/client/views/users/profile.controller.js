@@ -58,7 +58,7 @@
 
         function safe(url) {
             var a =vm.currentUser.resume;
-            return"../../project/public/uploads/"+a;
+            return "../../project/public/uploads/"+a;
         }
     }
 })();
