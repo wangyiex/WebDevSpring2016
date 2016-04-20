@@ -20,12 +20,29 @@ module.exports = function (db, mongoose) {
         findJobById:findJobById,
         applyJob:applyJob,
         findApplicants:findApplicants,
-        followUser:followUser
+        followUser:followUser,
+        unfollowUser:unfollowUser,
+        findAllUsers:findAllUsers
     };
     return api;
 
     function getMongooseModel() {
         return UserModel;
+    }
+    function findAllUsers() {
+        var deferred = q.defer();
+
+        UserModel
+            .find()
+            .then(function(err, docs) {
+                if (err) {
+                    deferred.reject(err);
+                }else {
+                    deferred.resolve(docs);
+                }
+            });
+
+        return deferred.promise;
     }
 
     //the implementation of finding user by username and password
@@ -157,7 +174,6 @@ module.exports = function (db, mongoose) {
             username:user.username,
             email:user.email
         }
-        console.log(jobid);
         var deferred = q.defer();
         JobModel.update(
             {_id: jobid},
@@ -180,19 +196,37 @@ module.exports = function (db, mongoose) {
             {_id: jobid});
     }
 
-    function followUser(user, id) {
+    function followUser(email, user) {
         var deferred = q.defer();
-        var followuser = {
-            name:user.username,
-            email:user.email
-        }
         UserModel
             .update(
                 {
-                    _id: id
+                    _id: user._id
                 },
                 {
-                    $push: {likes: followuser}
+                    $push: {likes:email}
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(doc);
+                    }
+                }
+            );
+
+        return deferred.promise;
+    }
+
+    function unfollowUser(email, user) {
+        var deferred = q.defer();
+        UserModel
+            .update(
+                {
+                    _id: user._id
+                },
+                {
+                    $pull: {likes:email}
                 },
                 function(err, doc) {
                     if (err) {

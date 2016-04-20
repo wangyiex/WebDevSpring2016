@@ -24,7 +24,6 @@
                         vm.currentUser = currentUser;
                     }
                 });
-
         }
         init();
 
@@ -59,7 +58,6 @@
 
         function safe(url) {
             var a =vm.currentUser.resume;
-            console.log(a);
             return"../../project/public/uploads/"+a;
         }
     }

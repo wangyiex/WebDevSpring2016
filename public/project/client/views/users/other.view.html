@@ -8,9 +8,12 @@
                 <li><a href=""
                        class="glyphicon glyphicon-thumbs-up"
                        ng-show="model.unliked"
-                       ng-click="model.like(model.showuser)"
+                       ng-click="model.like(model.showuser.email)"
                 ></a></li>
-                <li><a href="" class="glyphicon glyphicon-thumbs-down" ng-show="model.liked"></a></li>
+                <li><a href="" class="glyphicon glyphicon-thumbs-down"
+                       ng-show="model.liked"
+                       ng-click="model.unlike(model.showuser.email)">
+                </a></li>
                 <li><a href="">Name:{{model.showuser.username}}</a></li>
                 <li><a href="">Email:{{model.showuser.email}}</a></li>
 

@@ -17,9 +17,12 @@
             findJobById:findJobById,
             findApplicants:findApplicants,
             followUser:followUser,
+            unfollowUser:unfollowUser,
             setCurrentUser:setCurrentUser,
             getCurrentUser:getCurrentUser,
-            logout:logout
+            findAllUsers:findAllUsers,
+            logout:logout,
+            getUpdateCurrentUser:getUpdateCurrentUser
         };
         return service;
 
@@ -58,29 +61,6 @@
             return $http.get("/api/project/jobs");
         }
 
-        function followByName(username, currentuser) {
-            var exist;
-            for(u in users) {
-                if(users[u].username==currentuser.username) {
-                    for (user in currentuser.likes) {
-                        if(username == currentuser.likes[user]) {
-                            exist = username;
-                            }
-                        }
-                    if(exist){
-
-                    }else {
-                        if(users[u].likes) {
-                            users[u].likes.push(username);
-                        }else {
-                            users[u].likes = [];
-                            users[u].likes.push(username);
-                        }
-                    }
-                    }
-                }
-            }
-
         //the implementation of set current user
         function setCurrentUser(user) {
             $rootScope.currentUser = user;
@@ -105,8 +85,20 @@
         function findApplicants(jobid) {
             return $http.post("/api/project/applicants/"+jobid);
         }
-        function followUser(user,currentUser) {
-            return $http.post("/api/project/follow/"+currentUser._id,user);
+        function followUser(email) {
+            return $http.post("/api/project/follow/"+email);
+        }
+        function unfollowUser(email) {
+            return $http.put("/api/project/unfollow/"+email);
+        }
+        function findAllUsers() {
+            return $http.get("/api/project/users");
+        }
+        function getUpdateCurrentUser(email) {
+            var email = {
+                email:email
+            };
+            return $http.post("/api/project/get",email);
         }
     }
 })();

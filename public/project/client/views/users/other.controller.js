@@ -6,38 +6,49 @@
     function OtherController(UserService,$routeParams,$location) {
         var vm = this;
         var email = $routeParams.email;
-        vm.likeed = false;
+        vm.liked = false;
         vm.unliked = false;
         vm.like = like;
+        vm.unlike = unlike;
         function init() {
-            if (email) {
                 UserService
                     .findUserByEmail(email)
                     .then(function (response) {
                         vm.showuser = response.data;
-                        console.log(vm.showuser);
+                        return UserService.getCurrentUser();
                     })
-            }
-            UserService
-                .getCurrentUser()
-                .then( function (response) {
-                    vm.currentUser = response.data;
-                    if(vm.currentUser.likes.indexOf(email) != -1) {
-                        vm.likeed = true;
-                    }else {
-                        vm.unliked = true;
-                    }
-                })
+                    .then( function (response) {
+                        vm.currentUser = response.data;
+                        if (vm.currentUser.likes.indexOf(vm.showuser.email) !=-1) {
+                            vm.liked = true;
+                        }else{
+                            vm.unliked = true;
+                        }
+                    });
         }
         init();
-        function like(user) {
-            var currentUser = vm.currentUser;
+
+        function like(email) {
             UserService
-                .followUser(user,currentUser)
+                .followUser(email)
                 .then(function(response) {
-                    if(response.data) {
-                        $location.url("#/other/{{user.email}}")
-                    }
+                   return UserService.getUpdateCurrentUser(vm.currentUser.email);
+                })
+                .then(function(response) {
+                    vm.currentUser = response.data;
+                    $location.url("/profile");
+                })
+
+        }
+        function unlike(email) {
+            UserService
+                .unfollowUser(email)
+                .then(function(response) {
+                    return UserService.getUpdateCurrentUser(vm.currentUser.email);
+                })
+                .then(function(response) {
+                    vm.currentUser = response.data;
+                    $location.url("/profile");
                 })
 
         }

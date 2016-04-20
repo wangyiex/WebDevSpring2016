@@ -28,7 +28,9 @@ module.exports = function(app, userModel) {
     app.get("/api/project/:jobid/:employerid", findJobById);
     app.post("/api/project/apply/:jobid",applyJob);
     app.post("/api/project/applicants/:jobid",findApplicants);
-    app.post("/api/project/follow/:id",followUser);
+    app.post("/api/project/follow/:email",followUser);
+    app.put("/api/project/unfollow/:email",unfollowUser);
+    app.post("/api/project/get",get);
     //the implementation of finding user by username and password
     function login(req, res) {
         var credentials = req.body;
@@ -85,7 +87,6 @@ module.exports = function(app, userModel) {
         var user = req.body;
         userModel.updateProfile(id, user)
             .then(function(user) {
-                console.log(user);
                 req.session.currentUser = user;
                 res.json(user);
             },
@@ -239,16 +240,43 @@ module.exports = function(app, userModel) {
     }
 
     function followUser(req, res) {
-        var id = req.params.id;
-        var user = req.body;
+        var email = req.params.email;
+        var user = req.session.currentUser;
         userModel
-            .followUser(user, id)
-            .then(function (doc) {
-                res.json(doc);
+            .followUser(email, user)
+            .then(function (user) {
+                res.json(user);
             },
              function (err) {
                  res.status(400).send(err);
              }
             );
     }
+
+    function unfollowUser(req, res) {
+        var email = req.params.email;
+        var user = req.session.currentUser;
+        userModel
+            .unfollowUser(email, user)
+            .then(function (user) {
+                    res.json(user);
+                },
+                function (err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+    function get(req,res) {
+        var email = req.body.email;
+        userModel.findUserByEmail(email)
+            .then(function (doc) {
+                req.session.currentUser = doc;
+                res.json(doc);
+            },
+            function (err) {
+                res.status(400).send(err);
+            });
+
+    }
+
 }

@@ -16,7 +16,6 @@
             UserService
                 .logout()
                 .then(function() {
-                    console.log("jinlaileo");
                     UserService.setCurrentUser(null);
                     $location.url("/home");
                 });

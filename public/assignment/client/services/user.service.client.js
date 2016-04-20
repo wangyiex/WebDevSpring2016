@@ -37,7 +37,7 @@
             return $http.delete('/api/assignment/admin/user/'+userId);
         }
         //The implementation of finding all users
-        function findAllUsers(callback) {
+        function findAllUsers() {
              return $http.get("/api/assignment/user");
         }
 

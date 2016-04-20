@@ -39,23 +39,29 @@
                     controller:"RegisterController",
                     controllerAs:"model"
                 })
-                .when("/admin",{
-                    templateUrl: "views/admin/admin.view.html",
-                })
                 .when("/search",{
                     templateUrl: "views/search/search.view.html",
                     controller:"SearchController",
-                    controllerAs: "model"
+                    controllerAs: "model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }
                 })
                 .when("/detail/:name", {
                     templateUrl: "views/search/detail.view.html",
                     controller:"DetailController",
-                    controllerAs: "model"
+                    controllerAs: "model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }
                 })
                 .when("/resume", {
                     templateUrl:"views/users/resume.view.html",
                     controller:"ResumeController",
-                    controllerAs:"model"
+                    controllerAs:"model",
+                    resolve: {
+                        checkLoggedIn: checkLoggedIn
+                    }
                 })
                 .when("/employer", {
                     templateUrl:"views/users/employer.view.html",
