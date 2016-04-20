@@ -100,7 +100,8 @@ module.exports = function (db, mongoose) {
                     likes:user.likes,
                     roles:user.roles,
                     job:user.job,
-                    photo:user.photo
+                    photo:user.photo,
+                    resume:user.resume
                 }
             },
             function(err, doc) {
