@@ -86,7 +86,7 @@
             return $http.post("/api/project/applicants/"+jobid);
         }
         function followUser(email) {
-            return $http.post("/api/project/follow/"+email);
+            return $http.put("/api/project/follow/"+email);
         }
         function unfollowUser(email) {
             return $http.put("/api/project/unfollow/"+email);

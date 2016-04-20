@@ -28,7 +28,7 @@ module.exports = function(app, userModel) {
     app.get("/api/project/:jobid/:employerid", findJobById);
     app.post("/api/project/apply/:jobid",applyJob);
     app.post("/api/project/applicants/:jobid",findApplicants);
-    app.post("/api/project/follow/:email",followUser);
+    app.put("/api/project/follow/:email",followUser);
     app.put("/api/project/unfollow/:email",unfollowUser);
     app.post("/api/project/get",get);
     //the implementation of finding user by username and password

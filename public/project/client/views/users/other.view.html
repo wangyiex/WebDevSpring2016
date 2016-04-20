@@ -7,11 +7,11 @@
             <ul class="nav nav-sidebar">
                 <li><a href=""
                        class="glyphicon glyphicon-thumbs-up"
-                       ng-show="model.unliked"
+                       ng-show="model.unliked&&currentUser.role!='employer'"
                        ng-click="model.like(model.showuser.email)"
                 ></a></li>
                 <li><a href="" class="glyphicon glyphicon-thumbs-down"
-                       ng-show="model.liked"
+                       ng-show="model.liked&&currentUser.role!='employer'"
                        ng-click="model.unlike(model.showuser.email)">
                 </a></li>
                 <li><a href="">Name:{{model.showuser.username}}</a></li>
