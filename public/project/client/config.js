@@ -43,9 +43,6 @@
                     templateUrl: "views/search/search.view.html",
                     controller:"SearchController",
                     controllerAs: "model",
-                    resolve: {
-                        checkLoggedIn: checkLoggedIn
-                    }
                 })
                 .when("/detail/:name", {
                     templateUrl: "views/search/detail.view.html",

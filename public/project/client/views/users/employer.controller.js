@@ -61,8 +61,12 @@
                     return UserService.postJob(njob,user._id);
                 })
                 .then(function(response) {
-                    $location.url('/employer');
-                });
+                    return UserService.getUpdateCurrentUser(vm.currentUser.email);
+                })
+                .then(function(response) {
+                    vm.currentUser = response.data;
+                    $location.url("/employer");
+                })
         }
     }
 })();
