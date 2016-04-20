@@ -93,7 +93,6 @@ module.exports = function (db, mongoose) {
             {
                 $set: {
                     username: user.username,
-                    password: user.password,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     emails: user.emails,
