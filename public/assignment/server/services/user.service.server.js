@@ -79,7 +79,7 @@ module.exports = function(app, userModel) {
     function register(req,res) {
         var newuser = req.body;
         newuser.password = bcrypt.hashSync(newuser.password);
-        newuser.roles = ['admin'];
+        newuser.roles = ['user'];
         userModel
             .findUserByUsername(newuser.username)
             .then(
