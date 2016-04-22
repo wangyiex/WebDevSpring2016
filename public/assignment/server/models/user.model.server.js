@@ -1,5 +1,5 @@
 var q = require("q");
-
+var bcrypt = require("bcrypt-nodejs");
 module.exports = function (db, mongoose) {
 
     // load user schema
@@ -87,12 +87,14 @@ module.exports = function (db, mongoose) {
     //the implementation of updating a user
     function updateUser(id, user) {
         var deferred = q.defer();
-
+        if (user.password != null && user.password != "" && typeof user.password != "undefined") {
+            user.password = bcrypt.hashSync(user.password);
         UserModel.update(
             {_id: id},
             {
                 $set: {
                     username: user.username,
+                    password:user.password,
                     firstName: user.firstName,
                     lastName: user.lastName,
                     emails: user.emails,
@@ -107,7 +109,28 @@ module.exports = function (db, mongoose) {
                     deferred.resolve(user);
                 }
             }
-        );
+        );}else {
+            UserModel.update(
+                {_id: id},
+                {
+                    $set: {
+                        username: user.username,
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        emails: user.emails,
+                        phones:user.phones,
+                        roles:user.roles,
+                    }
+                },
+                function(err, doc) {
+                    if (err) {
+                        deferred.reject(err);
+                    } else {
+                        deferred.resolve(user);
+                    }
+                }
+            );
+        }
         return deferred.promise;
     }
 

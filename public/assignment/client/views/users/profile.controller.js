@@ -16,6 +16,7 @@
                    var currentUser = response.data;
                    if(currentUser) {
                        vm.currentUser = currentUser;
+                       vm.currentUser.password = null;
                    }
                 });
         }
