@@ -46,7 +46,9 @@
         function selectUser(user)
         {
             console.log(user);
+
             $scope.user = angular.copy(user);
+            $scope.user.password = null;
         }
 
         function handleSuccess(response) {
